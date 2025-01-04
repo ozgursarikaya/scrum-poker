@@ -1,2 +1,7 @@
-﻿<b>Welcome</b><br />
+﻿@{
+    Layout = "_Layout";
+}
+<b>Welcome</b><br />
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi2r9z0R9Zb6e6NSZelN6MbSk2pmnwpfNaJw&s" />
+<br /><br />
+<a href="/room?roomId=@Guid.NewGuid().ToString("N").ToLower()" class="btn btn-primary">Create Pocker Room</a>

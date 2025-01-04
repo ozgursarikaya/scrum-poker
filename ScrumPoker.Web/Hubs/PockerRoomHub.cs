@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using ScrumPoker.Web.Models;
+using System.Reflection;
 
 namespace ScrumPoker.Web.Hubs
 {
@@ -9,17 +10,13 @@ namespace ScrumPoker.Web.Hubs
         {
             model.Cid = Context.ConnectionId;
 
-            if (model.IsJoin)
-            {
-                await Join(model.RoomId).ConfigureAwait(false);
-            }
-
             await Clients.Group(model.RoomId).SendAsync("ReceiveVote", model).ConfigureAwait(true);
         }
 
-        public async Task Join(string roomId)
+        public async Task Join(string roomId, string username)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId, CancellationToken.None);
+            await Clients.Group(roomId).SendAsync("ReceiveVote", new PockerRoomHubSendVoteModel() { IsJoin = true, UserName = username }).ConfigureAwait(true);
         }
 
         public Task Disconnect(string roomId)
