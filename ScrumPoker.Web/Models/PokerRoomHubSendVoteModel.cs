@@ -1,6 +1,6 @@
 ﻿namespace ScrumPoker.Web.Models
 {
-    public class PockerRoomHubSendVoteModel
+    public class PokerRoomHubSendVoteModel
     {
         public string UserName { get; set; }
         public byte VotePoint { get; set; }

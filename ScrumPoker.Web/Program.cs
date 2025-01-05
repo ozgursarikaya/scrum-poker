@@ -24,6 +24,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}");
 
-app.MapHub<PockerRoomHub>("/roomHub");
+app.MapHub<PokerRoomHub>("/roomHub");
 
 app.Run();
