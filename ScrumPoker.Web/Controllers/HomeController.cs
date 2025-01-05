@@ -8,5 +8,5 @@ namespace ScrumPoker.Web.Controllers
         {
             return View();
         }
-    }
+	}
 }
