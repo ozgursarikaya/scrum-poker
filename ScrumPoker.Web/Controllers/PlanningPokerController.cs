@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScrumPoker.Web.Models;
 using ScrumPoker.Web.TempData;
+using ScrumPoker.Business.Abstract;
 
 namespace ScrumPoker.Web.Controllers
-{
+{   
     [Route("planning-poker")]
     public class PlanningPokerController : Controller
     {
+        private readonly IPlanningPokerVotingTypeService _planningPokerVotingTypeService;
+
+        public PlanningPokerController(IPlanningPokerVotingTypeService planningPokerVotingTypeService)
+        {
+            _planningPokerVotingTypeService = planningPokerVotingTypeService;
+        }
+
         [Route("list", Name = "PlanningPokerIndex")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
