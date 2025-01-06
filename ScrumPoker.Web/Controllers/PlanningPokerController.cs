@@ -31,8 +31,8 @@ namespace ScrumPoker.Web.Controllers
         public IActionResult Create(PlanningPokerRoomCreateModel model)
         {
             StaticData.RoomList.Add(model);
-
-            return RedirectToAction("Room", new { roomId = model.Id });
+            string url = Url.RouteUrl("PlanningPokerRoom", new { roomId = model.Id });
+            return Json(new { RedirectLink = url });
         }
 
         [Route("room/{roomId}", Name = "PlanningPokerRoom")]

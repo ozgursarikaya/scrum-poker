@@ -3,9 +3,10 @@
 
 @{
     ViewData["Title"] = "Room";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = Model.RoomId })
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = Model.Name })
 
 <div class="row">
 

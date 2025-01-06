@@ -88,9 +88,16 @@
                 type: "POST",
                 url: "@Url.RouteUrl("PlanningPokerCreate")",
                 data: data,
-                dataType: "json",
-                success: function(resultData){
-                     
+                success: function(data){
+                    console.log(data);
+                     if(data!=null && data!='')
+                     {
+                         window.location = data.redirectLink;
+                     }
+                },
+                error:function(x,y){
+                    console.log(x);
+                    console.log(y);
                 }
         });
     }
