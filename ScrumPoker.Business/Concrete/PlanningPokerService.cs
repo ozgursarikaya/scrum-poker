@@ -17,4 +17,9 @@ public class PlanningPokerService(IPlanningPokerDal planningPokerDal) : IPlannin
     {
         return await _planningPokerDal.Get(id);
     }
+
+    public async Task<bool> Update(UpdatePlanningPokerDto request)
+    {
+        return await _planningPokerDal.Update(request);
+    }
 }

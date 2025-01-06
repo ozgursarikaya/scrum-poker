@@ -1,8 +1,7 @@
 ﻿using ScrumPoker.DataAccess.Abstract;
 
-namespace ScrumPoker.DataAccess.Concrete
+namespace ScrumPoker.DataAccess.Concrete;
+
+public class PokerRoomDal : IPokerRoomDal
 {
-    public class PokerRoomDal : IPokerRoomDal
-    {
-    }
 }
