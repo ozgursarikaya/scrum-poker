@@ -2,14 +2,14 @@
 {
     public class PokerUserModel
     {
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string RoomId { get; set; }
         public string UserName { get; set; } = "Anonymous";
 
-        public PokerUserModel(string roomId, string userName)
+        public PokerUserModel(string roomId, string userId)
         {
             RoomId = roomId;
-            UserName = userName;
+            UserId = userId;
         }
     }
 }

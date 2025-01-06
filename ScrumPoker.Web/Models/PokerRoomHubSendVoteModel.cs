@@ -2,6 +2,7 @@
 {
     public class PokerRoomHubSendVoteModel
     {
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public byte VotePoint { get; set; }
         public string Cid { get; set; }
