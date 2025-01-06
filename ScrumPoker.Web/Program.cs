@@ -20,9 +20,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseStaticFiles();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Dashboard}/{action=Index}");
+app.MapControllerRoute(name: "default", pattern: "dashboard");
 
 app.MapHub<PokerRoomHub>("/roomHub");
 

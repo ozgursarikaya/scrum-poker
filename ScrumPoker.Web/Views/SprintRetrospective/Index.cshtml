@@ -7,7 +7,37 @@
 
 @await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Sprint Retrospective List" })
 
-
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-md-8">
+                        <form class="d-flex flex-wrap align-items-center">
+                            <label for="inputPassword2" class="visually-hidden">Search</label>
+                            <div class="me-3">
+                                <input type="search" class="form-control my-1 my-md-0" id="txtSearchKey" placeholder="Search...">
+                            </div>
+                            <label for="status-select" class="me-2">Sort By</label>
+                            <div class="me-sm-3">
+                                <select class="form-select my-1 my-md-0" id="ddlStatus">
+                                    <option selected="">All</option>
+                                    <option value="1">Finished</option>
+                                    <option value="2">Ongoing</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-md-end mt-3 mt-md-0">
+                            <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-lg-4">
