@@ -9,6 +9,7 @@ public static class DataAccessServiceRegistration
     public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
     {
         services.AddScoped<IPlanningPokerVotingTypeDal, PlanningPokerVotingTypeDal>();
+        services.AddScoped<IPlanningPokerDal, PlanningPokerDal>();
 
         return services;
     }

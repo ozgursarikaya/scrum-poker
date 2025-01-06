@@ -9,6 +9,7 @@ public static class BusinessServiceRegistration
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
         services.AddScoped<IPlanningPokerVotingTypeService, PlanningPokerVotingTypeService>();
+        services.AddScoped<IPlanningPokerService, PlanningPokerService>();
 
         return services;
     }
