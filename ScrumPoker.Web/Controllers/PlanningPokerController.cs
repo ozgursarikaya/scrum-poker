@@ -36,5 +36,10 @@ namespace ScrumPoker.Web.Controllers
 
             return View(vm);
         }
+        [Route("room-security/{roomId}", Name = "PlanningPokerRoomSecurity")]
+        public IActionResult RoomSecurity(string roomId)
+        {
+            return View();
+        }
     }
 }
