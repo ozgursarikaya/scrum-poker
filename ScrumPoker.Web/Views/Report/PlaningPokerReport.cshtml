@@ -1,0 +1,80 @@
+﻿@using ScrumPoker.Web.Models
+
+@{
+    ViewData["Title"] = "Planing Poker Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Planing Poker Reports" })
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <div class="row justify-content-between mb-2">
+                    <div class="col-6">
+                        <form>
+                            <div class="mb-8">
+                                <label for="txtSearchKey" class="visually-hidden">Search</label>
+                                <input type="search" class="form-control" id="txtSearchKey" placeholder="Search...">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Poker Name</th>
+                                <th>Team</th>
+                                <th>Date</th>
+                                <th style="width: 82px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i < 10; i++)
+                            {
+                                <tr>
+                                    <td>Planning Poker Name @i</td>
+                                    <td>Payment</td>
+                                    <td>06.01.2025 13:15</td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-file-excel-outline"></i></a>
+                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-file-search-outline"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <ul class="pagination pagination-rounded justify-content-end mb-0 mt-2">
+                    <li class="page-item">
+                        <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+                            <span aria-hidden="true">«</span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript: void(0);" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div> 
+    </div> 
+
+</div>
+

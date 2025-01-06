@@ -43,11 +43,27 @@
                 </a>
             </li>
 
+
             <li class="menu-item">
-                <a href="@Url.RouteUrl("ReportIndex")" class="menu-link">
+                <a href="#menuDashboards" data-bs-toggle="collapse" class="menu-link">
                     <span class="menu-icon"><i data-feather="bar-chart-2"></i></span>
                     <span class="menu-text"> Reports </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse" id="menuDashboards">
+                    <ul class="sub-menu">
+                        <li class="menu-item">
+                            <a href="@Url.RouteUrl("PlaningPokerReport")" class="menu-link">
+                                <span class="menu-text">Planning Poker Reports</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="@Url.RouteUrl("SprintRetrospectiveReport")" class="menu-link">
+                                <span class="menu-text">Sprint Retrospective Reports</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
 
             <li class="menu-item">

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ScrumPoker.Web.Models;
+using ScrumPoker.Web.TempData;
 using ScrumPoker.Business.Abstract;
 
 namespace ScrumPoker.Web.Controllers
@@ -23,10 +25,24 @@ namespace ScrumPoker.Web.Controllers
         {
             return View();
         }
-        [Route("room/{roomId}", Name = "PlanningPokerRoom")]
-        public IActionResult Room(Guid roomId)
+
+        [HttpPost]
+        [Route("create", Name = "PlanningPokerCreate")]
+        public IActionResult Create(PlanningPokerRoomCreateModel model)
         {
-            return View();
+            StaticData.RoomList.Add(model);
+
+            return RedirectToAction("Room", new { roomId = model.Id });
+        }
+
+        [Route("room/{roomId}", Name = "PlanningPokerRoom")]
+        public IActionResult Room(string roomId)
+        {
+            PlanningPokerIndexViewModel vm = new PlanningPokerIndexViewModel();
+            vm.RoomId = roomId;
+            vm.Name = StaticData.RoomList.FirstOrDefault(w => w.Id == roomId).Name;
+
+            return View(vm);
         }
     }
 }
