@@ -1,0 +1,80 @@
+﻿@using ScrumPoker.Web.Models
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Create Room" })
+
+<div class="row">
+    <div class="col-12">
+
+
+
+        <div class="card mb-2">
+            <div class="card-body">
+
+                <!--Name-->
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Room Name</label>
+                    <input type="text" id="txtName" class="form-control" />
+                </div>
+
+                <!--Vote Option-->
+                <div class="mb-3">
+                    <label for="ddlVoteOption" class="form-label">Vote Option</label>
+                    <select class="form-select" id="ddlVoteOption">
+                        <option value="1">Story Points</option>
+                        <option value="2">Fibonacci</option>
+                    </select>
+                </div>
+
+                <!--Anonymous Voting-->
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="chckAnonymousVoting">
+                        <label class="form-check-label" for="chckAnonymousVoting">
+                            Anonymous Voting
+                        </label>
+                    </div>
+                </div>
+
+                <!--Password Protected -->
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="chckPasswordProtected" onchange="PasswordProtectedOption()">
+                        <label class="form-check-label" for="chckPasswordProtected">
+                            Password Protected
+                        </label>
+                    </div>
+                </div>
+
+                <!--Password-->
+                <div class="mb-3" id="password-option" style="display:none">
+                    <label for="txtPassword" class="form-label">Password</label>
+                    <input type="text" id="txtPassword" class="form-control" />
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<script>
+    function PasswordProtectedOption()
+    {
+        $("#password-option").hide();
+        $("#txtPassword").val("");
+        if ($('#chckPasswordProtected').is(':checked'))
+        {
+            $("#password-option").show();
+        }
+    }
+</script>
+

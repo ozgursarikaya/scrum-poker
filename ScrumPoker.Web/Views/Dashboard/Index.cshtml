@@ -1,0 +1,34 @@
+﻿@using ScrumPoker.Web.Models
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Dashboard" })
+
+
+<div class="row">
+    <div class="col-12">
+
+
+
+        <div class="card mb-2">
+            <div class="card-body">
+
+                <b>Welcome Bitches</b>
+                <br />
+                <img src="https://media0.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif?cid=6c09b952kh8h1qurnzgu63iwgouozf4qkux11jrfkhjc1uh1&ep=v1_gifs_search&rid=giphy.gif&ct=g" />
+                <br />
+                <br />
+                <a href="/room?roomId=@Guid.NewGuid().ToString("N").ToLower()" class="btn btn-primary">Create Pocker Room</a>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+

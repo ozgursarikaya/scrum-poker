@@ -10,67 +10,41 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/images/favicon.ico">
+
     <!-- Plugins css -->
     <link href="~/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
     <link href="~/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
-
-    <!-- Theme Config Js -->
     <script src="~/js/head.js"></script>
 
-    <!-- Bootstrap css -->
+    <!-- css -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-    <!-- App css -->
     <link href="~/css/app.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- Icons css -->
     <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
-
-    <style>
-        #poker-cards ul li {
-            font-family: "Cerebri Sans,sans-serif";
-            list-style: none;
-        }
-
-            #poker-cards ul li a {
-                width: 80px;
-                height: 100px;
-                text-align: center;
-                line-height: 100px;
-                font-weight: bold;
-                font-size: 30px;
-                float: left;
-                margin: 5px;
-                background: #fff;
-                color: #333;
-                text-shadow: 1px 1px 2px #43bfe5;
-                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-                transition: all .2s ease-in-out;
-                border-radius:5px;
-            }
-
-                #poker-cards ul li a:hover {
-                    transform: scale(1.1);
-                    background: #43bfe5;
-                    color: #fff;
-                    text-shadow: 1px 1px 2px #333;
-                }
-
-            #poker-cards ul li.selected-poker-card a {
-                transform: scale(1.1);
-                background: #1abc9c;
-                color: #fff;
-                text-shadow: 1px 1px 2px #333;
-            }
-
-    </style>
+    <link href="~/css/main.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
 
     <!-- Begin page -->
     <div id="wrapper">
-        @RenderBody()
+
+        @await Component.InvokeAsync("Menu")
+
+        <div class="content-page">
+
+            @await Component.InvokeAsync("TopBar")
+
+            <div class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>                
+            </div>
+
+
+        </div>
+
+        @*@await Html.PartialAsync("_FooterPartialView")*@
+        
     </div>
 
     <!-- Vendor js -->
@@ -84,8 +58,7 @@
     <script src="~/libs/apexcharts/apexcharts.min.js"></script>
     <script src="~/libs/selectize/js/standalone/selectize.min.js"></script>
 
-    <!-- Dashboar 1 init js-->
-    <script src="~/js/pages/dashboard-1.init.js"></script>
+
 
 </body>
 </html>

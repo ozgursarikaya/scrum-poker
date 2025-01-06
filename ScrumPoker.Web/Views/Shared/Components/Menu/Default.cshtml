@@ -1,0 +1,71 @@
+﻿<!-- ========== Menu ========== -->
+<div class="app-menu">
+
+    <!-- Brand Logo -->
+    <div class="logo-box">
+        <!-- Brand Logo Light -->
+        <a href="index.html" class="logo-light">
+            <img src="~/images/logo-light.png" alt="logo" class="logo-lg">
+            <img src="~/images/logo-sm.png" alt="small logo" class="logo-sm">
+        </a>
+
+        <!-- Brand Logo Dark -->
+        <a href="index.html" class="logo-dark">
+            <img src="~/images/logo-dark.png" alt="dark logo" class="logo-lg">
+            <img src="~/images/logo-sm.png" alt="small logo" class="logo-sm">
+        </a>
+    </div>
+
+    <!-- menu-left -->
+    <div class="scrollbar">
+
+        <!--- Menu -->
+        <ul class="menu">
+
+            <li class="menu-item">
+                <a href="@Url.RouteUrl("DashboardIndex")" class="menu-link">
+                    <span class="menu-icon"><i data-feather="airplay"></i></span>
+                    <span class="menu-text"> Dashboard </span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="@Url.RouteUrl("PlanningPokerIndex")" class="menu-link">
+                    <span class="menu-icon"><i data-feather="layers"></i></span>
+                    <span class="menu-text"> Planning Poker </span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="@Url.RouteUrl("SprintRetrospectiveIndex")" class="menu-link">
+                    <span class="menu-icon"><i data-feather="map"></i></span>
+                    <span class="menu-text"> Sprint Retrospective </span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="@Url.RouteUrl("ReportIndex")" class="menu-link">
+                    <span class="menu-icon"><i data-feather="bar-chart-2"></i></span>
+                    <span class="menu-text"> Reports </span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="@Url.RouteUrl("TeamIndex")" class="menu-link">
+                    <span class="menu-icon"><i data-feather="grid"></i></span>
+                    <span class="menu-text"> Teams </span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="@Url.RouteUrl("UserIndex")" class="menu-link">
+                    <span class="menu-icon"><i data-feather="users"></i></span>
+                    <span class="menu-text"> Users </span>
+                </a>
+            </li>
+
+        </ul>
+        <!--- End Menu -->
+        <div class="clearfix"></div>
+    </div>
+</div>

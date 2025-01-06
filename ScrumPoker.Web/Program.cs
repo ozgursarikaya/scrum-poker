@@ -22,7 +22,7 @@ app.UseStaticFiles();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Dashboard}/{action=Index}");
 
 app.MapHub<PokerRoomHub>("/roomHub");
 

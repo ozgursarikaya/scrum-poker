@@ -2,11 +2,13 @@
 
 namespace ScrumPoker.Web.Controllers
 {
-    public class HomeController : Controller
+    
+    public class DashboardController : Controller
     {
+        [Route("dashboard", Name ="DashboardIndex")]
         public IActionResult Index()
         {
             return View();
         }
-	}
+    }
 }
