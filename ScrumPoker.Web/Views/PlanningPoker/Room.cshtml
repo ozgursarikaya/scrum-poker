@@ -1,18 +1,32 @@
 ﻿@using ScrumPoker.Web.Models
+@model ScrumPoker.Web.Models.PlanningPokerIndexViewModel
 
 @{
     ViewData["Title"] = "Room";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Room Name" })
-
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = Model.RoomId })
 
 <div class="row">
 
     <!-- ========== Left Start ========== -->
     <div class="col-lg-3">
+
+        <!-- ========== Room Start ========== -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-0">Room</h5>
+                <br />
+                <div id="cardCollpase1" class="collapse show">
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap table-striped" id="tblParticipants">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- ========== Waiting Start ========== -->
         <div class="card">
@@ -171,3 +185,41 @@
 
 </div>
 
+<input type="hidden" id="userId" class="form-control" value="@Guid.NewGuid().ToString("N")" />
+
+<div class="modal fade" tabindex="-1" role="dialog" id="profileSettings">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="userName" class="col-form-label">Display Name</label>
+                    <input type="text" class="form-control" id="userName">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SaveProfile()">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/signalr/signalr.js"></script>
+    <script src="~/js/site.js"></script>
+
+    <script type="text/javascript">
+        window.roomId="@Model.RoomId";
+
+        $(document).ready(function(){
+
+        });
+
+    </script>
+}
