@@ -15,16 +15,18 @@ namespace ScrumPoker.Web.Hubs
 
         public async Task Join(string roomId, string userId)
         {
-            PokerUserModel usr = new PokerUserModel(roomId, userId);
+            PokerUserModel userModel = new PokerUserModel(roomId, userId);
             if (!UserList.Any(w => w.UserId == userId))
-                UserList.Add(new PokerUserModel(roomId, userId));
+            {
+                UserList.Add(userModel);
+            }
             else
             {
-                usr = UserList.FirstOrDefault(w => w.UserId == userId);
+                userModel = UserList.FirstOrDefault(w => w.UserId == userId);
             }
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId, CancellationToken.None);
-            await Clients.Group(roomId).SendAsync("ReceiveVote", new PokerRoomHubSendVoteModel() { IsJoin = true, UserId = userId, UserName = usr.UserName }).ConfigureAwait(true);
+            await Clients.Group(roomId).SendAsync("ReceiveVote", new PokerRoomHubSendVoteModel() { IsJoin = true, UserId = userId, UserName = userModel.UserName }).ConfigureAwait(true);
         }
 
         public Task Disconnect(string roomId)
@@ -46,7 +48,5 @@ namespace ScrumPoker.Web.Hubs
             }
             await GetUserListInRoom(model.RoomId);
         }
-
-
     }
 }
