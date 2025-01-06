@@ -1,5 +1,9 @@
-﻿namespace ScrumPoker.DataAccess.Abstract;
+﻿using ScrumPoker.Dto;
+
+namespace ScrumPoker.DataAccess.Abstract;
 
 public interface IPlanningPokerDal
 {
+    Task<Guid> Create(CreatePlanningPokerDto request);
+    Task<PlanningPokerDto> Get(Guid id);
 }

@@ -1,8 +1,14 @@
 using ScrumPoker.Web.Hubs;
+using ScrumPoker.Business;
+using ScrumPoker.DataAccess;
+using ScrumPoker.DataProvider;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddBusinessServices();
+builder.Services.AddDataAccessServices();
+builder.Services.AddDataProviderServices();
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddSignalR();

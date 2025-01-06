@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScrumPoker.Business\ScrumPoker.Business.csproj" />
+    <ProjectReference Include="..\ScrumPoker.DataAccess\ScrumPoker.DataAccess.csproj" />
+    <ProjectReference Include="..\ScrumPoker.DataProvider\ScrumPoker.DataProvider.csproj" />
+  </ItemGroup>
+
 </Project>
