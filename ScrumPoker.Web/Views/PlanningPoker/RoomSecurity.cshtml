@@ -10,11 +10,9 @@
             <div class="card mb-2">
                 <div class="card-body">
                     <div class="mb-3">
-                        @Html.TextBoxFor(w => w.Password)
-                        @Html.HiddenFor(w => w.RoomId)
-                        @* <label for="Name" class="form-label">Room Password</label>
-                        <input type="text" id="Name" name="Name" class="form-control" />
-                        <input type="hidden" id="RoomId" name="RoomId" /> *@
+                        <label for="Name" class="form-label">Room Password</label>
+                        <input type="text" id="Password" name="Password" class="form-control" />
+                        <input type="hidden" id="RoomId" name="RoomId" value="@Model.RoomId" />
                     </div>
                 </div>
             </div>

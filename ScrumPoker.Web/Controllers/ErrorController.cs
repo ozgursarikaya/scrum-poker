@@ -2,9 +2,11 @@
 
 namespace ScrumPoker.Web.Controllers
 {
+    [Route("error")]
     public class ErrorController : Controller
     {
-        public IActionResult Error()
+        [Route("")]
+        public IActionResult Index()
         {
             return View();
         }

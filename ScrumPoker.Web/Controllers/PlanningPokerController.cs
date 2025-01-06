@@ -24,6 +24,7 @@ namespace ScrumPoker.Web.Controllers
         [Route("create", Name = "PlanningPokerCreate")]
         public IActionResult Create()
         {
+            
             return View();
         }
 
@@ -44,7 +45,7 @@ namespace ScrumPoker.Web.Controllers
 
             if (roomData == null)
             {
-                return RedirectToAction("Error", "Error");
+                return Redirect("/error");
             }
 
             PlanningPokerIndexViewModel vm = new PlanningPokerIndexViewModel();
@@ -77,16 +78,19 @@ namespace ScrumPoker.Web.Controllers
         public IActionResult RoomSecurity(PlanningPokerRoomSecurityModel model)
         {
             var roomData = StaticData.RoomList.FirstOrDefault(w => w.Id == model.RoomId);
+  
             if (roomData == null) {
-                return RedirectToAction("Error", "Error");
+                return Redirect("/error");
             }
 
             if(roomData.Password == model.Password)
             {
                 StaticData.CorrectPassword = true;
+
+                return RedirectToAction("Room", new { roomId = model.RoomId });
             }
 
-            return RedirectToAction("Room", new { roomId = model.RoomId });
+            return Redirect("/error");
         }
     }
 }
