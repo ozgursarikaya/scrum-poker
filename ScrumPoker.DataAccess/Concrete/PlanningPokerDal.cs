@@ -19,4 +19,9 @@ public class PlanningPokerDal(IDataProvider dataProvider) : IPlanningPokerDal
     {
         return await _dataProvider.Get<PlanningPokerDto>(StoredProcedureNames.GetPlanningPoker);
     }
+
+    public async Task<bool> Update(UpdatePlanningPokerDto request)
+    {
+        return await _dataProvider.Update(StoredProcedureNames.UpdatePlanningPoker, request);
+    }
 }

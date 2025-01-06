@@ -5,4 +5,5 @@ public class StoredProcedureNames
     public const string GetPlanningPokerVotingTypes = "GetPlanningPokerVotingTypes";
     public const string CreatePlanningPoker = "CreatePlanningPoker";
     public const string GetPlanningPoker = "GetPlanningPoker";
+    public const string UpdatePlanningPoker = "UpdatePlanningPoker";
 }
