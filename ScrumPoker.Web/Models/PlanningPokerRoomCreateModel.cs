@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public bool IsPasswordProtected { get; set; }
         public string Password { get; set; }
+        public string OwnerUserId { get; set; }
     }
 }

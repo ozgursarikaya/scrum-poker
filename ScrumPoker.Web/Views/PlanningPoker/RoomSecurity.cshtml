@@ -1,8 +1,28 @@
-﻿
+﻿@model ScrumPoker.Web.Models.PlanningPokerRoomSecurityModel
 @{
     ViewData["Title"] = "RoomSecurity";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>RoomSecurity</h1>
-
+<form action="@Url.RouteUrl("PlanningPokerRoomSecurity")" method="post">
+    <div class="row">
+        <div class="col-6">
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="mb-3">
+                        @Html.TextBoxFor(w => w.Password)
+                        @Html.HiddenFor(w => w.RoomId)
+                        @* <label for="Name" class="form-label">Room Password</label>
+                        <input type="text" id="Name" name="Name" class="form-control" />
+                        <input type="hidden" id="RoomId" name="RoomId" /> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit" class="btn btn-primary">Giriş</button>
+        </div>
+    </div>
+</form>

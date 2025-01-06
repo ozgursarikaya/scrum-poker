@@ -2,9 +2,10 @@
 using ScrumPoker.Web.Models;
 using ScrumPoker.Web.TempData;
 using ScrumPoker.Business.Abstract;
+using System.Reflection;
 
 namespace ScrumPoker.Web.Controllers
-{   
+{
     [Route("planning-poker")]
     public class PlanningPokerController : Controller
     {
@@ -31,23 +32,61 @@ namespace ScrumPoker.Web.Controllers
         public IActionResult Create(PlanningPokerRoomCreateModel model)
         {
             StaticData.RoomList.Add(model);
-            string url = Url.RouteUrl("PlanningPokerRoom", new { roomId = model.Id });
-            return Json(new { RedirectLink = url });
+
+            return Json(new { RedirectLink = Url.RouteUrl("PlanningPokerRoom", new { roomId = model.Id }) });
         }
 
         [Route("room/{roomId}", Name = "PlanningPokerRoom")]
         public IActionResult Room(string roomId)
         {
+            string redirectUrl = string.Empty;
+            var roomData = StaticData.RoomList.FirstOrDefault(w => w.Id == roomId);
+
+            if (roomData == null)
+            {
+                return RedirectToAction("Error", "Error");
+            }
+
             PlanningPokerIndexViewModel vm = new PlanningPokerIndexViewModel();
             vm.RoomId = roomId;
-            vm.Name = StaticData.RoomList.FirstOrDefault(w => w.Id == roomId).Name;
+            vm.Name = roomData.Name;
 
-            return View(vm);
+            if (roomData.IsPasswordProtected && !StaticData.CorrectPassword)
+            {
+                //TO DO: Room owner ise bu akışa girmeyecek
+                return RedirectToAction("RoomSecurity", new { roomId = roomId });
+            }
+            else
+            {
+                StaticData.CorrectPassword = false;
+                return View(vm);
+            }
         }
+
         [Route("room-security/{roomId}", Name = "PlanningPokerRoomSecurity")]
         public IActionResult RoomSecurity(string roomId)
         {
-            return View();
+            PlanningPokerRoomSecurityModel vm = new PlanningPokerRoomSecurityModel();
+            vm.RoomId = roomId;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [Route("room-security/{roomId}", Name = "PlanningPokerRoomSecurity")]
+        public IActionResult RoomSecurity(PlanningPokerRoomSecurityModel model)
+        {
+            var roomData = StaticData.RoomList.FirstOrDefault(w => w.Id == model.RoomId);
+            if (roomData == null) {
+                return RedirectToAction("Error", "Error");
+            }
+
+            if(roomData.Password == model.Password)
+            {
+                StaticData.CorrectPassword = true;
+            }
+
+            return RedirectToAction("Room", new { roomId = model.RoomId });
         }
     }
 }

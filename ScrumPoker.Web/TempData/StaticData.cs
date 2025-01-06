@@ -6,5 +6,6 @@ namespace ScrumPoker.Web.TempData
     {
         public static List<PlanningPokerRoomCreateModel> RoomList { get; set; } = new();
         public static List<PokerUserModel> UserList { get; set; } = new();
+        public static bool CorrectPassword { get; set; }
     }
 }
