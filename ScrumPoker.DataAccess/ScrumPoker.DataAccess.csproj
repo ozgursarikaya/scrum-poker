@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScrumPoker.Common\ScrumPoker.Common.csproj" />
+    <ProjectReference Include="..\ScrumPoker.DataProvider\ScrumPoker.DataProvider.csproj" />
+    <ProjectReference Include="..\ScrumPoker.Dto\ScrumPoker.Dto.csproj" />
+  </ItemGroup>
+
 </Project>
