@@ -4,18 +4,22 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
 
 connection.on("ReceiveVote", function (data) {
     console.log(data);
-
+    GetUserListInRoom(window.roomId);
     console.log("Oy ekrana basılacak");   //li.textContent = `${data.userName} kullanıcısı > vote : ${data.votePoint} > connectionId : ${data.cid} > roomId : ${data.roomId}`;
 });
 
 connection.on("ReceiveUserListInRoom", function (data) {
+    console.log("ReceiveUserListInRoom");
     $("#tblParticipants tbody").html("");
+    $("#tblParticipants tbody").append("<tr><td>Katılımcı</td><td align=right>Oy Durumu</td></tr>");
     $.each(data, function (index, item) {
+        console.log(item);
         var participantRow = `<tr>
                                 <td class="table-user">
                                     <img src="/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
                                         <a href="javascript:void(0);" class="text-body fw-semibold">${item.userName}</a>
                                 </td>
+                                <td align="right">${item.votePoint > 0 ? `<i class="ti-thumb-up"></i>` : `<i class="ti-time"></i>`}</td>
                              </tr>`;
         $("#tblParticipants tbody").append(participantRow);
     });
@@ -91,6 +95,7 @@ function SetCookie(cname, cvalue, exdays) {
 }
 
 function Vote(votePoint) {
+
     var userId = $("#userId").val();
 
     var data = {
@@ -113,3 +118,12 @@ function JoinToRoom(roomId) {
         return console.log(err.toString());
     });
 }
+
+$('#poker-cards ul li').click(function () {
+    $('#poker-cards ul li').removeClass('selected-poker-card');
+    console.log("Tıklanan eleman: ", $(this).text());
+    console.log("li object: ");
+    console.log($(this));
+    // Tıklanan <li> elemanına 'selected-poker-card' sınıfını ekle
+    $(this).attr("class", "selected-poker-card");
+});

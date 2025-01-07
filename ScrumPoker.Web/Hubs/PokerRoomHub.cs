@@ -9,7 +9,11 @@ namespace ScrumPoker.Web.Hubs
         public async Task SendVote(PokerRoomHubSendVoteModel model)
         {
             model.Cid = Context.ConnectionId;
-
+            var userModel = UserList.FirstOrDefault(w => w.UserId == model.UserId);
+            if (userModel != null)
+            {
+                userModel.VotePoint = model.VotePoint;
+            }
             await Clients.Group(model.RoomId).SendAsync("ReceiveVote", model).ConfigureAwait(true);
         }
 

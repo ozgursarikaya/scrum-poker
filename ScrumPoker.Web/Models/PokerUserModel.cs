@@ -5,6 +5,7 @@
         public string UserId { get; set; }
         public string RoomId { get; set; }
         public string UserName { get; set; } = "Anonymous";
+        public byte VotePoint { get; set; }
 
         public PokerUserModel(string roomId, string userId)
         {
