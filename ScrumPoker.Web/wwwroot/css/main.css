@@ -1,4 +1,8 @@
-﻿#poker-cards ul li {
+﻿body {
+    border-top: 4px solid #ffcd03
+}
+
+#poker-cards ul li {
     font-family: "Cerebri Sans,sans-serif";
     list-style: none;
 }
