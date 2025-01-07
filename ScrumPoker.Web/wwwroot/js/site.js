@@ -75,6 +75,9 @@ function SaveProfile() {
         "UserId": $("#userId").val(),
         "UserName": $("#userName").val()
     };
+
+    $("#headerDisplayName").html(cookieData.UserName);
+
     SetCookie("kollabisi", JSON.stringify(cookieData), 30);
 
     $('#profileSettings').modal("hide");

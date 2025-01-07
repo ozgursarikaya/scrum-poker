@@ -12,6 +12,11 @@ builder.Services.AddDataProviderServices();
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddSignalR();
+builder.Services.AddSession(option =>
+{
+    //Süre 1 dk olarak belirlendi
+    option.IdleTimeout = TimeSpan.FromMinutes(30);
+});
 
 var app = builder.Build();
 
@@ -21,6 +26,7 @@ if (app.Environment.IsDevelopment())
      
 }
 
+app.UseSession();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

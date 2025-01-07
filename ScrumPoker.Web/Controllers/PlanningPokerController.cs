@@ -32,6 +32,8 @@ namespace ScrumPoker.Web.Controllers
         [Route("create", Name = "PlanningPokerCreate")]
         public IActionResult Create(PlanningPokerRoomCreateModel model)
         {
+            HttpContext.Session.SetString("IsOwner", "true");
+            
             StaticData.RoomList.Add(model);
 
             return Json(new { RedirectLink = Url.RouteUrl("PlanningPokerRoom", new { roomId = model.Id }) });
@@ -51,15 +53,17 @@ namespace ScrumPoker.Web.Controllers
             PlanningPokerIndexViewModel vm = new PlanningPokerIndexViewModel();
             vm.RoomId = roomId;
             vm.Name = roomData.Name;
+            
+            bool isOwner = HttpContext.Session.GetString("IsOwner") != null ? bool.Parse(HttpContext.Session.GetString("IsOwner")) : false;
+            bool correctPassword = HttpContext.Session.GetString("CorrectPassword") != null ? bool.Parse(HttpContext.Session.GetString("CorrectPassword")) : false;
 
-            if (roomData.IsPasswordProtected && !StaticData.CorrectPassword)
+            if (roomData.IsPasswordProtected && !correctPassword && !isOwner)
             {
                 //TO DO: Room owner ise bu akışa girmeyecek
                 return RedirectToAction("RoomSecurity", new { roomId = roomId });
             }
             else
-            {
-                StaticData.CorrectPassword = false;
+            { 
                 return View(vm);
             }
         }
@@ -85,7 +89,7 @@ namespace ScrumPoker.Web.Controllers
 
             if(roomData.Password == model.Password)
             {
-                StaticData.CorrectPassword = true;
+                HttpContext.Session.SetString("CorrectPassword", "true");
 
                 return RedirectToAction("Room", new { roomId = model.RoomId });
             }

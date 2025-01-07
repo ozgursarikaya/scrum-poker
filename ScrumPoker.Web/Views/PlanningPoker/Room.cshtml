@@ -186,7 +186,7 @@
 
 </div>
 
-<input type="hidden" id="userId" class="form-control" value="@Guid.NewGuid().ToString("N")" />
+<input type="hidden" id="userId" class="form-control" value="@(string.IsNullOrEmpty(Model.OwnerUserId) ? Guid.NewGuid().ToString("N") : Model.OwnerUserId)" />
 
 <div class="modal fade" tabindex="-1" role="dialog" id="profileSettings">
     <div class="modal-dialog" role="document">

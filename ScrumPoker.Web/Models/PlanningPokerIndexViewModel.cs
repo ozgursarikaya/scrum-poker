@@ -4,5 +4,6 @@
     {
         public string RoomId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
+        public string OwnerUserId { get; set; }
     }
 }

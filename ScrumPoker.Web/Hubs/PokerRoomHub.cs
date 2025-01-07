@@ -46,6 +46,10 @@ namespace ScrumPoker.Web.Hubs
             {
                 user.UserName = model.UserName;
             }
+            else
+            {
+                UserList.Add(model);
+            }
             await GetUserListInRoom(model.RoomId);
         }
     }
