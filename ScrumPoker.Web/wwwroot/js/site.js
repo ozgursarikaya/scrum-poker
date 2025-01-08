@@ -80,8 +80,6 @@ connection.start().then(function () {
     JoinToRoom(window.roomId);
     GetUserListInRoom(window.roomId);
 
-   
-
 }).catch(function (err) {
     return console.log(err.toString());
 });
