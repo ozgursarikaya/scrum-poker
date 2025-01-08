@@ -1,0 +1,90 @@
+﻿@using ScrumPoker.Web.Models
+
+@{
+    ViewData["Title"] = "Create Retro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Create Retro" })
+
+<div class="row">
+    <div class="col-6">
+
+        <div class="card mb-2">
+            <div class="card-body">
+
+
+                <!--Name-->
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Retro Name</label>
+                    <input type="text" id="txtName" class="form-control" />
+                </div>
+                <!--Password-->
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="chckPasswordProtected" onchange="PasswordProtectedOption()">
+                    <label class="form-check-label" for="chckPasswordProtected">
+                        Password Protected
+                    </label>
+                </div>
+                <!--Password-->
+                <div class="mb-3" id="password-option" style="display:none">
+                    <label for="txtPassword" class="form-label">Password</label>
+                    <input type="text" id="txtPassword" class="form-control" />
+                </div>
+                <!--UserNameVisibilityOption-->
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="chckUserNameVisibilityOption">
+                    <label class="form-check-label" for="chckUserNameVisibilityOption">
+                        Show user names
+                    </label>
+                </div>
+                <!--HasCommentOption -->
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="chckHasCommentOption">
+                    <label class="form-check-label" for="chckHasCommentOption">
+                        User can give a comment to items
+                    </label>
+                </div>
+                <!--HasReactionOption-->
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="chckHasReactionOption">
+                    <label class="form-check-label" for="chckHasReactionOption">
+                        User can give a reaction to items
+                    </label>
+                </div>
+                <!--HasGifOption-->
+                <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="chckHasGifOption">
+                    <label class="form-check-label" for="chckHasGifOption">
+                        User can give a gif to items
+                    </label>
+                </div>
+                <br />
+                <!--Create -->
+                <div class="mb-3">
+                    <button class="btn btn-primary" onclick="Create()">Create</button>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function PasswordProtectedOption()
+    {
+        $("#password-option").hide();
+        $("#txtPassword").val("");
+        if ($('#chckPasswordProtected').is(':checked'))
+        {
+            $("#password-option").show();
+        }
+    }
+
+</script>

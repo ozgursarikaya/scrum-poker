@@ -10,5 +10,15 @@ namespace ScrumPoker.Web.Controllers
         {
             return View();
         }
+        [Route("create", Name = "SprintRetrospectiveCreate")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [Route("retro", Name = "SprintRetrospectiveRetro")]
+        public IActionResult Retro()
+        {
+            return View();
+        }
     }
 }

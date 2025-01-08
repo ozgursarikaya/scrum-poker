@@ -1,0 +1,113 @@
+﻿@using ScrumPoker.Web.Models
+
+@{
+    ViewData["Title"] = "Retro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Retro Name" })
+
+
+
+<div class="row">
+   
+    <!--retro-column-->
+    <div class="col-lg-3">
+        <div class="card border-top border-success retro-column">
+            <div class="card-body">
+                
+                <h4 class="header-title">Thumbs Up</h4>
+                <p class="sub-header">
+                    Your awesome text goes here. Your awesome text goes here.
+                </p>
+
+                <ul class="sortable-list tasklist list-unstyled">
+                    
+                    <!--retro-item-->
+                    <li class="retro-item">
+                        <p>There are many variations of passages of Lorem Ipsum available.</p>
+                        <div class="clearfix"></div>
+                    </li>
+
+                </ul>
+                <a href="javascript: void(0);" class="btn btn-success w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+            </div>
+        </div>
+    </div> 
+
+    <!--retro-column-->
+    <div class="col-lg-3">
+        <div class="card border-top border-danger retro-column">
+            <div class="card-body">
+
+                <h4 class="header-title">Thumbs Down</h4>
+                <p class="sub-header">
+                    Your awesome text goes here. Your awesome text goes here.
+                </p>
+
+                <ul class="sortable-list tasklist list-unstyled">
+
+                    <!--retro-item-->
+                    <li class="retro-item">
+                        <p>There are many variations of passages of Lorem Ipsum available.</p>
+                        <div class="clearfix"></div>
+                    </li>
+
+                </ul>
+                <a href="javascript: void(0);" class="btn btn-danger w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+            </div>
+        </div>
+    </div>
+
+    <!--retro-column-->
+    <div class="col-lg-3">
+        <div class="card border-top border-info retro-column">
+            <div class="card-body">
+
+                <h4 class="header-title">New Ideas</h4>
+                <p class="sub-header">
+                    Your awesome text goes here. Your awesome text goes here.
+                </p>
+
+                <ul class="sortable-list tasklist list-unstyled">
+
+                    <!--retro-item-->
+                    <li class="retro-item">
+                        <p>There are many variations of passages of Lorem Ipsum available.</p>
+                        <div class="clearfix"></div>
+                    </li>
+
+                </ul>
+                <a href="javascript: void(0);" class="btn btn-info w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+            </div>
+        </div>
+    </div>
+
+    <!--retro-column-->
+    <div class="col-lg-3">
+        <div class="card border-top border-warning retro-column">
+            <div class="card-body">
+
+                <h4 class="header-title">Kudos</h4>
+                <p class="sub-header">
+                    Your awesome text goes here. Your awesome text goes here.
+                </p>
+
+                <ul class="sortable-list tasklist list-unstyled">
+
+                    <!--retro-item-->
+                    <li class="retro-item">
+                        <p>There are many variations of passages of Lorem Ipsum available.</p>
+                        <div class="clearfix"></div>
+                    </li>
+
+                </ul>
+                <a href="javascript: void(0);" class="btn btn-warning w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+

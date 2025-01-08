@@ -10,6 +10,8 @@ public static class BusinessServiceRegistration
     {
         services.AddScoped<IPlanningPokerVotingTypeService, PlanningPokerVotingTypeService>();
         services.AddScoped<IPlanningPokerService, PlanningPokerService>();
+        services.AddScoped<IRetroService, RetroService>();
+        services.AddScoped<IRetroColumnService, RetroColumnService>();
 
         return services;
     }
