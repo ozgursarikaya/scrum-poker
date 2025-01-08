@@ -13,6 +13,11 @@ public class RetroColumnService(RetroColumnDal retroColumnDal) : IRetroColumnSer
         return await _retroColumnDal.Create(request);
     }
 
+    public async Task<bool> Delete(Guid id, Guid retroId)
+    {
+        return await _retroColumnDal.Delete(id, retroId);
+    }
+
     public async Task<List<RetroColumnDto>> GetList(Guid retroId)
     {
         return await _retroColumnDal.GetList(retroId);
