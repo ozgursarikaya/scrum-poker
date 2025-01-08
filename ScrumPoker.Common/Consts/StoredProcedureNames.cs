@@ -8,4 +8,5 @@ public class StoredProcedureNames
     public const string UpdatePlanningPoker = "UpdatePlanningPoker";
     public const string CreateRetro = "CreateRetro";
     public const string CreateRetroColumn = "CreateRetroColumn";
+    public const string GetRetroColumns = "GetRetroColumns";
 }

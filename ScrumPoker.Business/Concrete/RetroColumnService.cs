@@ -12,4 +12,9 @@ public class RetroColumnService(RetroColumnDal retroColumnDal) : IRetroColumnSer
     {
         return await _retroColumnDal.Create(request);
     }
+
+    public async Task<List<RetroColumnDto>> GetList(Guid retroId)
+    {
+        return await _retroColumnDal.GetList(retroId);
+    }
 }

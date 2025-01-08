@@ -1,7 +1,8 @@
 ﻿namespace ScrumPoker.Dto;
 
-public class CreateRetroColumnDto
+public class RetroColumnDto
 {
+    public Guid Id { get; set; }
     public Guid RetroId { get; set; }
     public string Name { get; set; } = default!;
     public string? Description { get; set; }

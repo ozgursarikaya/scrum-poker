@@ -13,4 +13,9 @@ public class RetroColumnDal(IDataProvider dataProvider) : IRetroColumnDal
     {
         return await _dataProvider.Insert<Guid>(StoredProcedureNames.CreateRetroColumn, request);
     }
+
+    public async Task<List<RetroColumnDto>> GetList(Guid retroId)
+    {
+        return await _dataProvider.GetList<RetroColumnDto>(StoredProcedureNames.GetRetroColumns, new { RetroId = retroId });
+    }
 }
