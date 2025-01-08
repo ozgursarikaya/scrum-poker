@@ -5,14 +5,19 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
 connection.on("ReceiveVote", function (data) {
     console.log(data);
     GetUserListInRoom(window.roomId);
-    console.log("Oy ekrana basılacak");   //li.textContent = `${data.userName} kullanıcısı > vote : ${data.votePoint} > connectionId : ${data.cid} > roomId : ${data.roomId}`;
 });
 
 connection.on("ReceiveUserListInRoom", function (data) {
     console.log("ReceiveUserListInRoom");
     $("#tblParticipants tbody").html("");
+    $("#tblVotedUserList tbody").html("");
+    $("#tblVoteExpectedUserList tbody").html("");
+    $("#topUserList").html("");
+    $("#bottomUserList").html("");
     $("#tblParticipants tbody").append("<tr><td>Katılımcı</td><td align=right>Oy Durumu</td></tr>");
+    console.log(data);
     $.each(data, function (index, item) {
+        console.log(index);
         console.log(item);
         var participantRow = `<tr>
                                 <td class="table-user">
@@ -22,6 +27,35 @@ connection.on("ReceiveUserListInRoom", function (data) {
                                 <td align="right">${item.votePoint > 0 ? `<i class="ti-thumb-up"></i>` : `<i class="ti-time"></i>`}</td>
                              </tr>`;
         $("#tblParticipants tbody").append(participantRow);
+
+        if (item.votePoint > 0) {
+            $("#tblVotedUserList tbody").append(participantRow);
+        }
+        else {
+            $("#tblVoteExpectedUserList tbody").append(participantRow);
+        }
+
+        var vote = "";
+        if ($("#userId").val() == item.userId) {
+            vote = "" + item.votePoint;
+        }
+        else {
+            if (item.votePoint > 0) {
+                vote = `<i class="ti-thumb-up"></i>`;
+            }
+        }
+
+       var pokerTableUserRow =  `<div class="text-center">
+                                                        <div class="user-circle-custom">Avatar</div>
+                                                        <div class="card-custom">${vote}</div>
+                                                        <div class="user-name-custom">${item.userName}</div>
+                                                    </div>`;
+        if (index % 2 == 0) {
+            $("#topUserList").append(pokerTableUserRow);
+        }
+        else {
+            $("#bottomUserList").append(pokerTableUserRow);
+        }
     });
 });
 
@@ -121,9 +155,6 @@ function JoinToRoom(roomId) {
 
 $('#poker-cards ul li').click(function () {
     $('#poker-cards ul li').removeClass('selected-poker-card');
-    console.log("Tıklanan eleman: ", $(this).text());
-    console.log("li object: ");
-    console.log($(this));
-    // Tıklanan <li> elemanına 'selected-poker-card' sınıfını ekle
+
     $(this).attr("class", "selected-poker-card");
 });

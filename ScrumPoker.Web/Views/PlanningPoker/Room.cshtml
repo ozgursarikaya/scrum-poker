@@ -1,11 +1,66 @@
-﻿@using ScrumPoker.Web.Models
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using ScrumPoker.Web.Models
 @model ScrumPoker.Web.Models.PlanningPokerIndexViewModel
+
 
 @{
     ViewData["Title"] = "Room";
     Layout = "~/Views/Shared/_RoomLayout.cshtml";
+    bool isOwner = HttpContextAccessor.HttpContext.Session.GetString("IsOwner") != null ? bool.Parse(HttpContextAccessor.HttpContext.Session.GetString("IsOwner")) : false;
 }
+<style>
+    .user-circle-custom {
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+    }
 
+    .user-name-custom {
+        font-size: 12px;
+        color: #888;
+        margin-top: 5px;
+    }
+
+    .card-custom {
+        width: 40px;
+        height: 60px;
+        border: 2px solid #9f9e9a;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #9f9e9a;
+    }
+
+    .next-round-custom {
+        width: 150px;
+        height: 50px;
+        border: 2px solid #9f9e9a;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9f9e9a;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        margin: 20px 0;
+    }
+
+        .next-round-custom:hover {
+            background-color: #9f9e9a;
+            color: #fff;
+        }
+</style>
 @await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = Model.Name })
 
 <div class="row">
@@ -36,26 +91,8 @@
                 <br />
                 <div id="cardCollpase1" class="collapse show">
                     <div class="table-responsive">
-                        <table class="table table-centered table-nowrap table-striped">
+                        <table class="table table-centered table-nowrap table-striped" id="tblVoteExpectedUserList">
                             <tbody>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="~/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="~/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="~/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -70,26 +107,8 @@
                 <br />
                 <div id="cardCollpase1" class="collapse show">
                     <div class="table-responsive">
-                        <table class="table table-centered table-nowrap table-striped">
+                        <table class="table table-centered table-nowrap table-striped" id="tblVotedUserList">
                             <tbody>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="~/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="~/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="table-user">
-                                        <img src="~/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -119,6 +138,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-12 d-flex flex-column align-items-center justify-content-center bg-light">
+                <!-- Üstteki Kullanıcılar -->
+                <div class="d-flex justify-content-center gap-3 mb-4" id="topUserList">
+                </div>
+
+                <!-- Sonraki Tur Butonu -->
+                @if (!isOwner)
+                {
+                    <div class="next-round-custom">Kartların açılması bekleniyor..</div>
+                }
+                else
+                {
+                    <div class="next-round-custom" onclick="alert('Açılıyor..')">Kartları Aç</div>
+                }
+
+                <!-- Alttaki Kullanıcılar -->
+                <div class="d-flex justify-content-center gap-3 mt-4 mb-3" id="bottomUserList">
+                </div>
+            </div>
             <div class="col-12" id="poker-cards">
                 <ul>
                     <li><a href="javascript:Vote(2)">2</a></li>
@@ -134,7 +173,7 @@
                     <li><a href="javascript:Vote(99)">GEÇ</a></li>
                 </ul>
             </div>
- 
+
         </div>
     </div>
 
