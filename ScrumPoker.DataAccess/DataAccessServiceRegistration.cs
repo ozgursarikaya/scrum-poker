@@ -10,6 +10,8 @@ public static class DataAccessServiceRegistration
     {
         services.AddScoped<IPlanningPokerVotingTypeDal, PlanningPokerVotingTypeDal>();
         services.AddScoped<IPlanningPokerDal, PlanningPokerDal>();
+        services.AddScoped<IRetroDal, RetroDal>();
+        services.AddScoped<IRetroColumnDal, RetroColumnDal>();
 
         return services;
     }
