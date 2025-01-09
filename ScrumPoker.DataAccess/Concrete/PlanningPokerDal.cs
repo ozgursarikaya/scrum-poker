@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using ScrumPoker.Common.Consts;
+﻿using ScrumPoker.Common.Consts;
 using ScrumPoker.DataAccess.Abstract;
 using ScrumPoker.DataProvider;
 using ScrumPoker.Dto;
@@ -18,6 +17,11 @@ public class PlanningPokerDal(IDataProvider dataProvider) : IPlanningPokerDal
     public async Task<PlanningPokerDto> Get(Guid id)
     {
         return await _dataProvider.Get<PlanningPokerDto>(StoredProcedureNames.GetPlanningPoker);
+    }
+
+    public async Task<List<GetPlanningPokerListDto>> GetList(GetPlanningPokerListFilterDto filter)
+    {
+        return await _dataProvider.GetList<GetPlanningPokerListDto>(StoredProcedureNames.GetPlanningPokers, filter);
     }
 
     public async Task<bool> Update(UpdatePlanningPokerDto request)

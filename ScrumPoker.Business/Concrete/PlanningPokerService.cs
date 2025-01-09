@@ -18,6 +18,11 @@ public class PlanningPokerService(IPlanningPokerDal planningPokerDal) : IPlannin
         return await _planningPokerDal.Get(id);
     }
 
+    public async Task<List<GetPlanningPokerListDto>> GetList(GetPlanningPokerListFilterDto filter)
+    {
+        return await _planningPokerDal.GetList(filter);
+    }
+
     public async Task<bool> Update(UpdatePlanningPokerDto request)
     {
         return await _planningPokerDal.Update(request);
