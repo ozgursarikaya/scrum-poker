@@ -17,4 +17,5 @@ public class StoredProcedureNames
     public const string CreatePlanningPokerUser = "CreatePlanningPokerUser";
     public const string DeletePlanningPokerUser = "DeletePlanningPokerUser";
     public const string UpdatePlanningPokerUser = "UpdatePlanningPokerUser";
+    public const string GetPlanningPokers = "GetPlanningPokers";
 }
