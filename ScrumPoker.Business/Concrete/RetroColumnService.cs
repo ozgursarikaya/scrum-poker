@@ -1,12 +1,12 @@
 ﻿using ScrumPoker.Business.Abstract;
-using ScrumPoker.DataAccess.Concrete;
+using ScrumPoker.DataAccess.Abstract;
 using ScrumPoker.Dto;
 
 namespace ScrumPoker.Business.Concrete;
 
-public class RetroColumnService(RetroColumnDal retroColumnDal) : IRetroColumnService
+public class RetroColumnService(IRetroColumnDal retroColumnDal) : IRetroColumnService
 {
-    private readonly RetroColumnDal _retroColumnDal = retroColumnDal;
+    private readonly IRetroColumnDal _retroColumnDal = retroColumnDal;
 
     public async Task<Guid> Create(CreateRetroColumnDto request)
     {
