@@ -16,4 +16,19 @@ public class PlanningPokerUserService : IPlanningPokerUserService
     {
         return await _planningPokerUserService.Create(request);
     }
+
+    public async Task<bool> Delete(Guid planningPokerId, Guid userId)
+    {
+        return await _planningPokerUserService.Delete(planningPokerId, userId);
+    }
+
+    public async Task<List<PlanningPokerUserDto>> GetList(Guid planningPokerId)
+    {
+        return await _planningPokerUserService.GetList(planningPokerId);
+    }
+
+    public async Task<bool> Update(UpdatePlanningPokerUserDto request)
+    {
+        return await _planningPokerUserService.Update(request);
+    }
 }

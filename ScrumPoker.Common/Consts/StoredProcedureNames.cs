@@ -15,4 +15,6 @@ public class StoredProcedureNames
     public const string CreateUserVerification = "CreateUserVerification";
     public const string VerifyUserVerificationCode = "VerifyUserVerificationCode";
     public const string CreatePlanningPokerUser = "CreatePlanningPokerUser";
+    public const string DeletePlanningPokerUser = "DeletePlanningPokerUser";
+    public const string UpdatePlanningPokerUser = "UpdatePlanningPokerUser";
 }
