@@ -4,7 +4,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
 
 connection.on("ReceiveVote", function (data) {
     console.log(data);
-    GetUserListInRoom(window.roomId);
+    GetUserListInRoom(window.roomId, false);
 });
 
 connection.on("ReceiveUserListInRoom", function (data) {
@@ -16,26 +16,44 @@ connection.on("ReceiveUserListInRoom", function (data) {
     $("#bottomUserList").html("");
     $("#tblParticipants tbody").append("<tr><td>Katılımcı</td><td align=right>Oy Durumu</td></tr>");
     console.log(data);
-    $.each(data, function (index, item) {
+    var allVotes = [];
+    $.each(data.userList, function (index, item) {
+        allVotes.push(item.votePoint);
+
         console.log(index);
         console.log(item);
-        var participantRow = `<tr>
+        var vote = "";
+        if (item.votePoint > 0) {
+            if (data.isAdminOpenedCards) {
+                vote = "" + item.votePoint;
+            }
+            else {
+                vote = `<i class="ti-thumb-up"></i>`;
+            }
+        }
+        else {
+            vote = `<i class="ti-time"></i>`;
+        }
+
+        var participantRow = `<tr  style="display: none;" class="newRow">
                                 <td class="table-user">
                                     <img src="/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
                                         <a href="javascript:void(0);" class="text-body fw-semibold">${item.userName}</a>
                                 </td>
-                                <td align="right">${item.votePoint > 0 ? `<i class="ti-thumb-up"></i>` : `<i class="ti-time"></i>`}</td>
+                                <td align="right">${vote}</td>
                              </tr>`;
         $("#tblParticipants tbody").append(participantRow);
-
+        $("#tblParticipants tbody .newRow").show("slow");
         if (item.votePoint > 0) {
             $("#tblVotedUserList tbody").append(participantRow);
         }
         else {
             $("#tblVoteExpectedUserList tbody").append(participantRow);
         }
+        $("#tblVotedUserList tbody .newRow").show("slow");
+        $("#tblVoteExpectedUserList tbody .newRow").show("slow");
 
-        var vote = "";
+
         if ($("#userId").val() == item.userId) {
             vote = "" + item.votePoint;
         }
@@ -43,9 +61,12 @@ connection.on("ReceiveUserListInRoom", function (data) {
             if (item.votePoint > 0) {
                 vote = `<i class="ti-thumb-up"></i>`;
             }
+            if (data.isAdminOpenedCards) {
+                vote = "" + item.votePoint;
+            }
         }
 
-       var pokerTableUserRow =  `<div class="text-center">
+        var pokerTableUserRow = `<div class="text-center">
                                                         <div class="user-circle-custom">Avatar</div>
                                                         <div class="card-custom">${vote}</div>
                                                         <div class="user-name-custom">${item.userName}</div>
@@ -57,6 +78,47 @@ connection.on("ReceiveUserListInRoom", function (data) {
             $("#bottomUserList").append(pokerTableUserRow);
         }
     });
+
+    if ($("#tblVotedUserList tbody").length == 0) {
+        $("#divVotedUserList").hide();
+    }
+
+    if ($("#tblVoteExpectedUserList tbody").length == 0) {
+        $("#divVoteExpectedUserList").hide();
+    }
+
+    var uniqueVoteData = allVotes.filter((value, index, array) => array.indexOf(value) === index);
+    var chartData = [];
+    $.each(uniqueVoteData, function (index, item) {
+        chartData.push(allVotes.filter(x => x === item).length);
+    });
+
+    if (data.isAdminOpenedCards) {
+        const data = {
+            labels: uniqueVoteData,
+            datasets: [{
+                label: 'Vote',
+                data: chartData,
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+        };
+
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, config);
+    }
+    
+
 });
 
 connection.start().then(function () {
@@ -78,15 +140,15 @@ connection.start().then(function () {
     }
 
     JoinToRoom(window.roomId);
-    GetUserListInRoom(window.roomId);
+    GetUserListInRoom(window.roomId, false);
 
 }).catch(function (err) {
     return console.log(err.toString());
 });
 
-function GetUserListInRoom(roomId) {
+function GetUserListInRoom(roomId, isAdminOpenedCards) {
     console.log("GetUserListInRoom!");
-    connection.invoke("GetUserListInRoom", roomId).catch(function (err) {
+    connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards).catch(function (err) {
         return console.log(err.toString());
     });
 }
@@ -144,7 +206,7 @@ function Vote(votePoint) {
 
 function JoinToRoom(roomId) {
     console.log("JoinToRoom: " + roomId);
-    
+
     var userId = $("#userId").val();
     connection.invoke("Join", roomId, userId).catch(function (err) {
         return console.log(err.toString());
@@ -155,4 +217,8 @@ $('#poker-cards ul li').click(function () {
     $('#poker-cards ul li').removeClass('selected-poker-card');
 
     $(this).attr("class", "selected-poker-card");
+});
+
+$('#btnOpenCards').click(function () {
+    GetUserListInRoom(window.roomId, true);
 });
