@@ -12,6 +12,9 @@ public static class BusinessServiceRegistration
         services.AddScoped<IPlanningPokerService, PlanningPokerService>();
         services.AddScoped<IRetroService, RetroService>();
         services.AddScoped<IRetroColumnService, RetroColumnService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserVerificationService, UserVerificationService>();
+        services.AddScoped<IPlanningPokerUserService, PlanningPokerUserService>();
 
         return services;
     }

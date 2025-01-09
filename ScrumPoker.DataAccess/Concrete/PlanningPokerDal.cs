@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using ScrumPoker.Common.Consts;
+﻿using ScrumPoker.Common.Consts;
 using ScrumPoker.DataAccess.Abstract;
 using ScrumPoker.DataProvider;
 using ScrumPoker.Dto;
