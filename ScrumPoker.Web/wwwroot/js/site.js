@@ -53,7 +53,6 @@ connection.on("ReceiveUserListInRoom", function (data) {
         $("#tblVotedUserList tbody .newRow").show("slow");
         $("#tblVoteExpectedUserList tbody .newRow").show("slow");
 
-
         if ($("#userId").val() == item.userId) {
             vote = "" + item.votePoint;
         }
@@ -79,12 +78,18 @@ connection.on("ReceiveUserListInRoom", function (data) {
         }
     });
 
-    if ($("#tblVotedUserList tbody").length == 0) {
+    if ($("#tblVotedUserList tbody").html().length == 0) {
         $("#divVotedUserList").hide();
     }
+    else {
+        $("#divVotedUserList").show();
+    }
 
-    if ($("#tblVoteExpectedUserList tbody").length == 0) {
+    if ($("#tblVoteExpectedUserList tbody").html().length == 0) {
         $("#divVoteExpectedUserList").hide();
+    }
+    else {
+        $("#divVoteExpectedUserList").show();
     }
 
     var uniqueVoteData = allVotes.filter((value, index, array) => array.indexOf(value) === index);
@@ -141,6 +146,8 @@ connection.start().then(function () {
 
     JoinToRoom(window.roomId);
     GetUserListInRoom(window.roomId, false);
+
+    $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
 
 }).catch(function (err) {
     return console.log(err.toString());
@@ -202,6 +209,15 @@ function Vote(votePoint) {
     connection.invoke("SendVote", data).catch(function (err) {
         return console.log(err.toString());
     });
+
+    console.log(window.isOwner);
+    if (window.isOwner == "True") {
+        $(".next-round-custom").html("Oyları Göster");
+    }
+    else {
+        $(".next-round-custom").html("Oda sahibi bekleniyor..");
+    }
+    
 }
 
 function JoinToRoom(roomId) {
@@ -221,4 +237,5 @@ $('#poker-cards ul li').click(function () {
 
 $('#btnOpenCards').click(function () {
     GetUserListInRoom(window.roomId, true);
+    $(".next-round-custom").html("Sonraki Tur");
 });

@@ -147,11 +147,11 @@
                 <!-- Sonraki Tur Butonu -->
                 @if (!isOwner)
                 {
-                    <div class="next-round-custom">Kartların açılması bekleniyor..</div>
+                    <div class="next-round-custom">Aşağıdan bir kart seçiniz</div>
                 }
                 else
                 {
-                    <div class="next-round-custom" id="btnOpenCards">Kartları Aç</div>
+                    <div class="next-round-custom" id="btnOpenCards">Oyları Göster</div>
                 }
 
                 <!-- Alttaki Kullanıcılar -->
@@ -262,6 +262,7 @@
 
     <script type="text/javascript">
         window.roomId="@Model.RoomId";
+        window.isOwner="@isOwner";
 
         $(document).ready(function(){
 
