@@ -3,64 +3,12 @@
 @using ScrumPoker.Web.Models
 @model ScrumPoker.Web.Models.PlanningPokerIndexViewModel
 
-
 @{
     ViewData["Title"] = "Room";
     Layout = "~/Views/Shared/_RoomLayout.cshtml";
     bool isOwner = HttpContextAccessor.HttpContext.Session.GetString("IsOwner") != null ? bool.Parse(HttpContextAccessor.HttpContext.Session.GetString("IsOwner")) : false;
 }
-<style>
-    .user-circle-custom {
-        width: 50px;
-        height: 50px;
-        background-color: #fff;
-        border: 2px solid #ccc;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 14px;
-    }
 
-    .user-name-custom {
-        font-size: 12px;
-        color: #888;
-        margin-top: 5px;
-    }
-
-    .card-custom {
-        width: 40px;
-        height: 60px;
-        border: 2px solid #9f9e9a;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: #9f9e9a;
-    }
-
-    .next-round-custom {
-        width: 150px;
-        height: 50px;
-        border: 2px solid #9f9e9a;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #9f9e9a;
-        font-weight: bold;
-        text-decoration: none;
-        cursor: pointer;
-        margin: 20px 0;
-    }
-
-        .next-round-custom:hover {
-            background-color: #9f9e9a;
-            color: #fff;
-        }
-</style>
 @await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = Model.Name })
 
 <div class="row">
@@ -114,7 +62,6 @@
     </div>
     <!-- ========== Left End ========== -->
 
-
     <div class="col-lg-6">
         <div class="row">
 
@@ -163,20 +110,8 @@
 
             </div>
 
-            <div class="col-12" id="poker-cards">
-                <ul>
-                    <li><a href="javascript:Vote(2)">2</a></li>
-                    <li class="selected-poker-card"><a href="javascript:Vote(5)">4</a></li>
-                    <li><a href="javascript:Vote(7)">7</a></li>
-                    <li><a href="javascript:Vote(11)">11</a></li>
-                    <li><a href="javascript:Vote(14)">14</a></li>
-                    <li><a href="javascript:Vote(18)">18</a></li>
-                    <li><a href="javascript:Vote(22)">22</a></li>
-                    <li><a href="javascript:Vote(24)">24</a></li>
-                    <li><a href="javascript:Vote(28)">28</a></li>
-                    <li><a href="javascript:Vote(98)">Kahve</a></li>
-                    <li><a href="javascript:Vote(99)">GEÇ</a></li>
-                </ul>
+            <div class="col-12 cards-custom" id="poker-cards">
+                 
             </div>
 
         </div>
@@ -222,8 +157,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 <input type="hidden" id="userId" class="form-control" value="@(string.IsNullOrEmpty(Model.OwnerUserId) ? Guid.NewGuid().ToString("N") : Model.OwnerUserId)" />
@@ -244,7 +177,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="SaveProfile()">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnSaveProfile">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -261,11 +194,9 @@
         window.roomId="@Model.RoomId";
         window.isOwner="@isOwner";
 
-        $(document).ready(function(){
-
-
-
+        const roomManager = new RoomManager(window.roomId, window.isOwner);
+        jQuery("#btnSaveProfile").click(function(){
+         roomManager.saveProfile();
         });
-
     </script>
 }

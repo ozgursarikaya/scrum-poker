@@ -1,258 +1,240 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
+class RoomManager {
+    constructor(roomId, isOwner) {
+        console.log("roomId: " + roomId, "isOwner: " + isOwner);
+        this.roomId = roomId;
+        this.isOwner = isOwner;
+        this.connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
+        this.selectedCard = null; // Seçilen kart bilgisini saklamak için
+        this.cardValues = [1, 2, 3, 5, 8, 13, 21]; // Kart puanları
 
-connection.on("ReceiveVote", function (data) {
-    console.log(data);
-    GetUserListInRoom(window.roomId, false);
-});
+        this.setupConnection();
+        this.createCards(); // Kartları oluştur
+    }
 
-connection.on("ReceiveUserListInRoom", function (data) {
-    console.log("ReceiveUserListInRoom");
-    $("#tblVotedUserList tbody").html("");
-    $("#tblVoteExpectedUserList tbody").html("");
-    $("#topUserList").html("");
-    $("#bottomUserList").html("");
-    $("#users-in-the-room").html("");
-    console.log(data);
-    var allVotes = [];
-    $.each(data.userList, function (index, item) {
-        allVotes.push(item.votePoint);
+    setupConnection() {
+        this.connection.on("ReceiveVote", (data) => this.handleReceiveVote(data));
+        this.connection.on("ReceiveUserListInRoom", (data) => this.handleReceiveUserListInRoom(data));
 
-        console.log(index);
-        console.log(item);
-        var vote = "";
-        if (item.votePoint > 0) {
-            if (data.isAdminOpenedCards) {
-                vote = "" + item.votePoint;
-            }
-            else {
-                vote = `<i class="ti-thumb-up"></i>`;
+        this.connection.start()
+            .then(() => this.onConnectionStart())
+            .catch((err) => console.error(err.toString()));
+    }
+
+    onConnectionStart() {
+        console.log("Connected!");
+
+        const cookieData = this.getCookieData();
+        if (cookieData) {
+            $("#userId").val(cookieData.UserId);
+            $("#userName").val(cookieData.UserName);
+            $("#headerDisplayName").html(cookieData.UserName);
+            this.saveProfile();
+        } else {
+            $('#profileSettings').modal("show");
+        }
+
+        this.joinRoom(this.roomId);
+        $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
+    }
+
+    handleReceiveVote(data) {
+        console.log(data);
+        this.getUserListInRoom(this.roomId, false);
+    }
+
+    handleReceiveUserListInRoom(data) {
+        console.log("ReceiveUserListInRoom");
+        this.clearUserLists();
+
+        const allVotes = data.userList.map(user => user.votePoint);
+        data.userList.forEach((item, index) => {
+            this.renderUser(item, index, data.isAdminOpenedCards);
+        });
+
+        this.updateVoteSectionsVisibility();
+        if (data.isAdminOpenedCards) {
+            this.renderChart(allVotes);
+        }
+    }
+
+    getUserListInRoom(roomId, isAdminOpenedCards) {
+        console.log("GetUserListInRoom!");
+        this.connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards).catch((err) => console.error(err.toString()));
+    }
+
+    saveProfile() {
+        const userId = $("#userId").val();
+        const userName = $("#userName").val();
+
+        if (!userId || !userName) return;
+
+        const data = { UserId: userId, UserName: userName, RoomId: this.roomId };
+        this.connection.invoke("SaveProfile", data).catch((err) => console.error(err.toString()));
+
+        this.setCookie("kollabisi", JSON.stringify({ UserId: userId, UserName: userName }), 30);
+        $('#profileSettings').modal("hide");
+    }
+
+    joinRoom(roomId) {
+        console.log("JoinToRoom: " + roomId);
+        const userId = $("#userId").val();
+        this.connection.invoke("Join", roomId, userId).catch((err) => console.error(err.toString()));
+    }
+
+    sendCardToServer(votePoint) {
+        const userId = $("#userId").val();
+        const data = { UserId: userId, VotePoint: votePoint, RoomId: this.roomId };
+
+        console.log(`${userId} : ${votePoint}`);
+        this.connection.invoke("SendVote", data).catch((err) => console.error(err.toString()));
+
+        if (this.isOwner === "True") {
+            $(".next-round-custom").html("Oyları Göster").click(() => {
+                this.getUserListInRoom(this.roomId, true);
+                $(".next-round-custom").html("Sonraki Tur");
+            });
+        } else {
+            $(".next-round-custom").html("Oda sahibi bekleniyor..");
+        }
+    }
+
+    // Kartları oluşturan fonksiyon
+    createCards() {
+        const container = document.getElementById('poker-cards');
+
+        this.cardValues.forEach((value) => {
+            const card = document.createElement('button');
+            card.className = 'card-custom';
+            card.textContent = value;
+
+            card.addEventListener('click', () => {
+                this.handleCardClick(value, card);
+            });
+
+            container.appendChild(card);
+        });
+    }
+
+    // Kart tıklama olayı
+    handleCardClick(value, cardElement) {
+        console.log(`Seçilen kart: ${value}`);
+
+        // Önceki seçimi kaldır
+        if (this.selectedCard !== null) {
+            const previousSelected = document.querySelector('.card-custom.selected');
+            if (previousSelected) {
+                previousSelected.classList.remove('selected');
             }
         }
-        else {
-            vote = `<i class="ti-time"></i>`;
-        }
 
-        var participantRow = `<tr  style="display: none;" class="newRow">
-                                <td class="table-user">
-                                    <img src="/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                        <a href="javascript:void(0);" class="text-body fw-semibold">${item.userName}</a>
-                                </td>
-                                <td align="right">${vote}</td>
-                             </tr>`;
+        // Yeni seçimi işaretle
+        cardElement.classList.add('selected');
+        this.selectedCard = value;
 
-        var prow = `<a href="javascript: void(0);" class="avatar-group-item">
-                            <img src="/images/users/user-1.jpg" class="rounded-circle avatar-md" alt="friend" data-bs-container="#users-in-the-room" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="${item.userName}" aria-label="${item.userName}"/>
-                        </a>`;
-         
-        $("#users-in-the-room").append(prow);
-        console.log(prow); 
-        //$('#users-in-the-room').popover({ container: "#users-in-the-room" });
-        $('[data-bs-toggle="tooltip"]').tooltip();
-        if (item.votePoint > 0) {
+        this.sendCardToServer(value);
+    }
+
+    clearUserLists() {
+        $("#tblVotedUserList tbody, #tblVoteExpectedUserList tbody, #topUserList, #bottomUserList, #users-in-the-room").html("");
+    }
+
+    renderUser(user, index, isAdminOpenedCards) {
+        const vote = this.getVoteMarkup(user.votePoint, isAdminOpenedCards);
+        const participantRow = this.createParticipantRow(user, vote);
+        const pokerTableUserRow = this.createPokerTableRow(user, vote);
+         $("#users-in-the-room").append(this.createAvatarMarkup(user));
+        if (user.votePoint > 0) {
             $("#tblVotedUserList tbody").append(participantRow);
-        }
-        else {
+        } else {
             $("#tblVoteExpectedUserList tbody").append(participantRow);
         }
-        $("#tblVotedUserList tbody .newRow").show("slow");
-        $("#tblVoteExpectedUserList tbody .newRow").show("slow");
 
-        if ($("#userId").val() == item.userId) {
-            vote = "" + item.votePoint;
-        }
-        else {
-            if (item.votePoint > 0) {
-                vote = `<i class="ti-thumb-up"></i>`;
-            }
-            if (data.isAdminOpenedCards) {
-                vote = "" + item.votePoint;
-            }
-        }
-
-        //var pokerTableUserRow = `<div class="text-center">
-        //                                                <div class="user-circle-custom">Avatar</div>
-        //                                                <div class="card-custom">${vote}</div>
-        //                                                <div class="user-name-custom">${item.userName}</div>
-        //                                            </div>`;
-        var pokerTableUserRow = `<div class="col-md-1">
-                            <div class="text-center card">
-                                <div class="card-body" style="padding:0 !important">
-                                    <div class="pt-2 pb-2">
-                                        <img src="/images/users/user-4.jpg" class="rounded-circle img-thumbnail avatar-xl" alt="profile-image">
-                                            <h4 class="mt-3"><a href="contacts-profile.html" class="text-dark">${vote}</a></h4>
-                                            <p class="text-muted">${item.userName}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-
-        if (index % 2 == 0) {
+        if (index % 2 === 0) {
             $("#topUserList").append(pokerTableUserRow);
-        }
-        else {
+        } else {
             $("#bottomUserList").append(pokerTableUserRow);
         }
-    });
 
-    if ($("#tblVotedUserList tbody").html().length == 0) {
-        $("#divVotedUserList").hide();
-    }
-    else {
-        $("#divVotedUserList").show();
+        $('[data-bs-toggle="tooltip"]').tooltip();
     }
 
-    if ($("#tblVoteExpectedUserList tbody").html().length == 0) {
-        $("#divVoteExpectedUserList").hide();
-    }
-    else {
-        $("#divVoteExpectedUserList").show();
+    updateVoteSectionsVisibility() {
+        $("#divVotedUserList").toggle($("#tblVotedUserList tbody").html().length > 0);
+        $("#divVoteExpectedUserList").toggle($("#tblVoteExpectedUserList tbody").html().length > 0);
     }
 
-    var uniqueVoteData = allVotes.filter((value, index, array) => array.indexOf(value) === index);
-    var chartData = [];
-    $.each(uniqueVoteData, function (index, item) {
-        chartData.push(allVotes.filter(x => x === item).length);
-    });
+    renderChart(allVotes) {
+        const uniqueVotes = [...new Set(allVotes)];
+        const chartData = uniqueVotes.map(vote => allVotes.filter(x => x === vote).length);
 
-    if (data.isAdminOpenedCards) {
         const data = {
-            labels: uniqueVoteData,
+            labels: uniqueVotes,
             datasets: [{
                 label: 'Vote',
                 data: chartData,
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                ],
+                backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
                 hoverOffset: 4
             }]
         };
 
-        const config = {
-            type: 'doughnut',
-            data: data,
-        };
-
         const ctx = document.getElementById('myChart');
-
-        new Chart(ctx, config);
-    }
-    
-
-});
-
-connection.start().then(function () {
-
-    console.log("Connected!");
-
-    if (document.cookie != '') {
-        var cookieData = JSON.parse(document.cookie.split(";")[0].split("=")[1]);
-        console.log("cookieData");
-        console.log(cookieData);
-        $("#userId").val(cookieData.UserId);
-        $("#userName").val(cookieData.UserName);
-        $("#headerDisplayName").html(cookieData.UserName);
-
-        SaveProfile();
-    }
-    else {
-        $('#profileSettings').modal("show");
+        new Chart(ctx, { type: 'doughnut', data });
     }
 
-    JoinToRoom(window.roomId);
-    //GetUserListInRoom(window.roomId, false);
-
-    $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
-
-}).catch(function (err) {
-    return console.log(err.toString());
-});
-
-function GetUserListInRoom(roomId, isAdminOpenedCards) {
-    console.log("GetUserListInRoom!");
-    connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards).catch(function (err) {
-        return console.log(err.toString());
-    });
-}
-
-function SaveProfile() {
-    if ($("#userId").val() == "" || $("#userName").val() == "")
-        return;
-
-    console.log("SaveProfile");
-
-    var data = {
-        "UserId": $("#userId").val(),
-        "UserName": $("#userName").val(),
-        "RoomId": window.roomId
-    };
-    console.log(data);
-    connection.invoke("SaveProfile", data).catch(function (err) {
-        return console.log(err.toString());
-    });
-
-    var cookieData = {
-        "UserId": $("#userId").val(),
-        "UserName": $("#userName").val()
-    };
-
-    $("#headerDisplayName").html(cookieData.UserName);
-
-    SetCookie("kollabisi", JSON.stringify(cookieData), 30);
-
-    $('#profileSettings').modal("hide");
-}
-
-function SetCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function Vote(votePoint) {
-
-    var userId = $("#userId").val();
-
-    var data = {
-        "UserId": userId,
-        "VotePoint": votePoint,
-        "RoomId": window.roomId
-    };
-
-    console.log(data.UserId + " : " + data.VotePoint);
-    connection.invoke("SendVote", data).catch(function (err) {
-        return console.log(err.toString());
-    });
-
-    console.log(window.isOwner);
-    if (window.isOwner == "True") {
-        $(".next-round-custom").html("Oyları Göster");
-        $(".next-round-custom").click(function () {
-            GetUserListInRoom(window.roomId, true);
-            $(".next-round-custom").html("Sonraki Tur");
-        });
+    getVoteMarkup(votePoint, isAdminOpenedCards) {
+        console.log(votePoint + ":" + isAdminOpenedCards);
+        if (votePoint > 0) {
+            return isAdminOpenedCards ? `${votePoint}` : `<i class="ti-thumb-up"></i>`;
+        }
+        return `<i class="ti-time"></i>`;
     }
-    else {
-        $(".next-round-custom").html("Oda sahibi bekleniyor..");
+
+    createParticipantRow(user, vote) {
+        return `<tr class="newRow">
+                    <td class="table-user">
+                        <img src="/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
+                        <a href="javascript:void(0);" class="text-body fw-semibold">${user.userName}</a>
+                    </td>
+                    <td align="right">${vote}</td>
+                </tr>`;
     }
-    
+
+    createPokerTableRow(user, vote) {
+        return `<div class="col-md-1">
+                    <div class="text-center card">
+                        <div class="card-body" style="padding:0 !important">
+                            <div class="pt-2 pb-2">
+                                <img src="/images/users/user-4.jpg" class="rounded-circle img-thumbnail avatar-xl" alt="profile-image">
+                                <h4 class="mt-3"><a href="contacts-profile.html" class="text-dark">${vote}</a></h4>
+                                <p class="text-muted">${user.userName}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+    }
+
+    createAvatarMarkup(user) {
+        return `<a href="javascript:void(0);" class="avatar-group-item">
+                    <img src="/images/users/user-1.jpg" class="rounded-circle avatar-md" alt="friend" 
+                         data-bs-container="#users-in-the-room" 
+                         data-bs-toggle="tooltip" 
+                         data-bs-placement="bottom" 
+                         title="${user.userName}">
+                </a>`;
+    }
+
+    getCookieData() {
+        if (document.cookie) {
+            return JSON.parse(document.cookie.split(";")[0].split("=")[1]);
+        }
+        return null;
+    }
+
+    setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+    }
 }
-
-function JoinToRoom(roomId) {
-    console.log("JoinToRoom: " + roomId);
-
-    var userId = $("#userId").val();
-    connection.invoke("Join", roomId, userId).catch(function (err) {
-        return console.log(err.toString());
-    });
-}
-
-$('#poker-cards ul li').click(function () {
-    $('#poker-cards ul li').removeClass('selected-poker-card');
-
-    $(this).attr("class", "selected-poker-card");
-});

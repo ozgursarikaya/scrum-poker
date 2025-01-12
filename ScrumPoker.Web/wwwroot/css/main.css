@@ -37,3 +37,48 @@
         color: #fff;
         text-shadow: 1px 1px 2px #333;
     }
+
+.next-round-custom {
+    width: 150px;
+    height: 50px;
+    border: 2px solid #9f9e9a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9f9e9a;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+    .next-round-custom:hover {
+        background-color: #9f9e9a;
+        color: #fff;
+    }
+
+.cards-custom {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-custom {
+    padding: 10px 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .card-custom:hover {
+        background-color: lightgray;
+    }
+
+    .card-custom.selected {
+        background-color: #43bfe5;
+        color: white;
+    }
