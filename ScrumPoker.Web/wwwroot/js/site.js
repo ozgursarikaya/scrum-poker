@@ -9,12 +9,11 @@ connection.on("ReceiveVote", function (data) {
 
 connection.on("ReceiveUserListInRoom", function (data) {
     console.log("ReceiveUserListInRoom");
-    $("#tblParticipants tbody").html("");
     $("#tblVotedUserList tbody").html("");
     $("#tblVoteExpectedUserList tbody").html("");
     $("#topUserList").html("");
     $("#bottomUserList").html("");
-    $("#tblParticipants tbody").append("<tr><td>Katılımcı</td><td align=right>Oy Durumu</td></tr>");
+    $("#users-in-the-room").html("");
     console.log(data);
     var allVotes = [];
     $.each(data.userList, function (index, item) {
@@ -42,8 +41,15 @@ connection.on("ReceiveUserListInRoom", function (data) {
                                 </td>
                                 <td align="right">${vote}</td>
                              </tr>`;
-        $("#tblParticipants tbody").append(participantRow);
-        $("#tblParticipants tbody .newRow").show("slow");
+
+        var prow = `<a href="javascript: void(0);" class="avatar-group-item">
+                            <img src="/images/users/user-1.jpg" class="rounded-circle avatar-md" alt="friend" data-bs-container="#users-in-the-room" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="${item.userName}" aria-label="${item.userName}"/>
+                        </a>`;
+         
+        $("#users-in-the-room").append(prow);
+        console.log(prow); 
+        //$('#users-in-the-room').popover({ container: "#users-in-the-room" });
+        $('[data-bs-toggle="tooltip"]').tooltip();
         if (item.votePoint > 0) {
             $("#tblVotedUserList tbody").append(participantRow);
         }
@@ -65,11 +71,23 @@ connection.on("ReceiveUserListInRoom", function (data) {
             }
         }
 
-        var pokerTableUserRow = `<div class="text-center">
-                                                        <div class="user-circle-custom">Avatar</div>
-                                                        <div class="card-custom">${vote}</div>
-                                                        <div class="user-name-custom">${item.userName}</div>
-                                                    </div>`;
+        //var pokerTableUserRow = `<div class="text-center">
+        //                                                <div class="user-circle-custom">Avatar</div>
+        //                                                <div class="card-custom">${vote}</div>
+        //                                                <div class="user-name-custom">${item.userName}</div>
+        //                                            </div>`;
+        var pokerTableUserRow = `<div class="col-md-1">
+                            <div class="text-center card">
+                                <div class="card-body" style="padding:0 !important">
+                                    <div class="pt-2 pb-2">
+                                        <img src="/images/users/user-4.jpg" class="rounded-circle img-thumbnail avatar-xl" alt="profile-image">
+                                            <h4 class="mt-3"><a href="contacts-profile.html" class="text-dark">${vote}</a></h4>
+                                            <p class="text-muted">${item.userName}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+
         if (index % 2 == 0) {
             $("#topUserList").append(pokerTableUserRow);
         }
@@ -145,7 +163,7 @@ connection.start().then(function () {
     }
 
     JoinToRoom(window.roomId);
-    GetUserListInRoom(window.roomId, false);
+    //GetUserListInRoom(window.roomId, false);
 
     $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
 
@@ -213,6 +231,10 @@ function Vote(votePoint) {
     console.log(window.isOwner);
     if (window.isOwner == "True") {
         $(".next-round-custom").html("Oyları Göster");
+        $(".next-round-custom").click(function () {
+            GetUserListInRoom(window.roomId, true);
+            $(".next-round-custom").html("Sonraki Tur");
+        });
     }
     else {
         $(".next-round-custom").html("Oda sahibi bekleniyor..");
@@ -233,9 +255,4 @@ $('#poker-cards ul li').click(function () {
     $('#poker-cards ul li').removeClass('selected-poker-card');
 
     $(this).attr("class", "selected-poker-card");
-});
-
-$('#btnOpenCards').click(function () {
-    GetUserListInRoom(window.roomId, true);
-    $(".next-round-custom").html("Sonraki Tur");
 });

@@ -73,13 +73,7 @@
             <div class="card-body">
                 <h5 class="card-title mb-0">Room</h5>
                 <br />
-                <div id="cardCollpase1" class="collapse show">
-                    <div class="table-responsive">
-                        <table class="table table-centered table-nowrap table-striped" id="tblParticipants">
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="avatar-group mb-3" id="users-in-the-room">
                 </div>
             </div>
         </div>
@@ -139,21 +133,24 @@
                 </div>
             </div>
 
-            <div class="col-12 d-flex flex-column align-items-center justify-content-center bg-light">
+            <div class="col-12">
                 <!-- Üstteki Kullanıcılar -->
-                <div class="d-flex justify-content-center gap-3 mb-4" id="topUserList">
+                <div class="col-12 d-flex justify-content-center" id="topUserList">
                 </div>
 
                 <!-- Sonraki Tur Butonu -->
-                @if (!isOwner)
-                {
-                    <div class="next-round-custom">Aşağıdan bir kart seçiniz</div>
-                }
-                else
-                {
-                    <div class="next-round-custom" id="btnOpenCards">Oyları Göster</div>
-                }
-
+                <div class="col-12 d-flex justify-content-center">
+                    @if (!isOwner)
+                    {
+                        <div class="card next-round-custom">
+                            Aşağıdan bir kart seçiniz
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card next-round-custom">Oyları Göster</div>
+                    }
+                </div>
                 <!-- Alttaki Kullanıcılar -->
                 <div class="d-flex justify-content-center gap-3 mt-4 mb-3" id="bottomUserList">
                 </div>
@@ -266,7 +263,7 @@
 
         $(document).ready(function(){
 
-          
+
 
         });
 
