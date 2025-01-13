@@ -31,7 +31,7 @@
                     </li>
 
                 </ul>
-                <a href="javascript: void(0);" class="btn btn-success w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+                <a href="javascript: void(0);" class="btn btn-success w-100 mt-3 waves-effect waves-light btnAddNewRetroItem" data-type="1"><i class="mdi mdi-plus-circle"></i> Add New</a>
             </div>
         </div>
     </div> 
@@ -55,7 +55,7 @@
                     </li>
 
                 </ul>
-                <a href="javascript: void(0);" class="btn btn-danger w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+                <a href="javascript: void(0);" class="btn btn-danger w-100 mt-3 waves-effect waves-light btnAddNewRetroItem" data-type="2"><i class="mdi mdi-plus-circle"></i> Add New</a>
             </div>
         </div>
     </div>
@@ -79,7 +79,7 @@
                     </li>
 
                 </ul>
-                <a href="javascript: void(0);" class="btn btn-info w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+                <a href="javascript: void(0);" class="btn btn-info w-100 mt-3 waves-effect waves-light btnAddNewRetroItem" data-type="3"><i class="mdi mdi-plus-circle"></i> Add New</a>
             </div>
         </div>
     </div>
@@ -103,11 +103,59 @@
                     </li>
 
                 </ul>
-                <a href="javascript: void(0);" class="btn btn-warning w-100 mt-3 waves-effect waves-light"><i class="mdi mdi-plus-circle"></i> Add New</a>
+                <a href="javascript: void(0);" class="btn btn-warning w-100 mt-3 waves-effect waves-light btnAddNewRetroItem" data-type="4"><i class="mdi mdi-plus-circle"></i> Add New</a>
             </div>
         </div>
     </div>
 
     
 </div>
+
+
+<!-- Signup modal content -->
+<div id="add-new-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                
+                <form class="px-3" action="#">
+
+                    <div class="mb-3">
+                        <label for="txtRetroItem" class="form-label">Retro Message</label>
+                        <textarea class="form-control" rows="3" id="txtRetroItem" required=""></textarea>
+                        <input type="hidden" value="0" id="hiddenType" />
+                            
+                    </div>
+
+                    <div class="mb-3 d-grid">
+                        <button class="btn btn-primary" type="submit" id="btnSaveRetroItem">Save</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function()
+        {
+            $(".btnAddNewRetroItem").click(function()
+            {
+                var type = $(this).attr("data-type");
+                $("#hiddenType").val(type);
+
+                var modal = new bootstrap.Modal($('#add-new-modal'));
+                modal.show()
+            });
+        });
+    </script>
+}
+
+
+
 
