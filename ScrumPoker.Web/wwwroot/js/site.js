@@ -37,11 +37,16 @@ class RoomManager {
 
         this.joinRoom(this.roomId);
         $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
+        $(".next-round-custom").off('click');
+    }
+
+    nextRound(isAdmin, resetAllVotes) {
+        this.getUserListInRoom(this.roomId, isAdmin, resetAllVotes);
     }
 
     handleReceiveVote(data) {
         console.log(data);
-        this.getUserListInRoom(this.roomId, false);
+        this.getUserListInRoom(this.roomId, false, false);
     }
 
     handleReceiveUserListInRoom(data) {
@@ -59,9 +64,9 @@ class RoomManager {
         }
     }
 
-    getUserListInRoom(roomId, isAdminOpenedCards) {
+    getUserListInRoom(roomId, isAdminOpenedCards, resetAllVotes) {
         console.log("GetUserListInRoom!");
-        this.connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards).catch((err) => console.error(err.toString()));
+        this.connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards, resetAllVotes).catch((err) => console.error(err.toString()));
     }
 
     saveProfile() {
@@ -83,6 +88,10 @@ class RoomManager {
         this.connection.invoke("Join", roomId, userId).catch((err) => console.error(err.toString()));
     }
 
+    setOnClickEvents() {
+        
+    }
+
     sendCardToServer(votePoint) {
         const userId = $("#userId").val();
         const data = { UserId: userId, VotePoint: votePoint, RoomId: this.roomId };
@@ -91,14 +100,15 @@ class RoomManager {
         this.connection.invoke("SendVote", data).catch((err) => console.error(err.toString()));
 
         if (this.isOwner === "True") {
-            $(".next-round-custom").html("Oyları Göster").click(() => {
-                this.getUserListInRoom(this.roomId, true);
-                $(".next-round-custom").html("Sonraki Tur");
-            });
+            $(".next-round-custom").html("Oyları Göster");
+            
         } else {
             $(".next-round-custom").html("Oda sahibi bekleniyor..");
+            $(".next-round-custom").off('click');
         }
     }
+
+    
 
     // Kartları oluşturan fonksiyon
     createCards() {

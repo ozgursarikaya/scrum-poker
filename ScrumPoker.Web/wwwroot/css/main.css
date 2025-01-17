@@ -39,7 +39,6 @@
     }
 
 .next-round-custom {
-    width: 150px;
     height: 50px;
     border: 2px solid #9f9e9a;
     border-radius: 12px;
@@ -51,6 +50,7 @@
     text-decoration: none;
     cursor: pointer;
     margin: 20px 0;
+    padding: 35px 35px;
 }
 
     .next-round-custom:hover {

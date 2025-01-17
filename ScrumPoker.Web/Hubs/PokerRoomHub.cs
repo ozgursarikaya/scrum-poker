@@ -38,11 +38,17 @@ namespace ScrumPoker.Web.Hubs
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
         }
 
-        public async Task GetUserListInRoom(string roomId,bool isAdminOpenedCards)
+        public async Task GetUserListInRoom(string roomId, bool isAdminOpenedCards, bool resetAllVotes)
         {
             GetUserListInRoomResponseModel model = new GetUserListInRoomResponseModel();
             model.IsAdminOpenedCards = isAdminOpenedCards;
             model.UserList = UserList.Where(w => w.RoomId == roomId).ToList();
+
+            if (resetAllVotes)
+            {
+                model.UserList.ForEach(w => w.VotePoint = (byte)0);
+            }
+            
             await Clients.Group(roomId).SendAsync("ReceiveUserListInRoom", model).ConfigureAwait(true);
         }
 
@@ -57,7 +63,7 @@ namespace ScrumPoker.Web.Hubs
             {
                 UserList.Add(model);
             }
-            await GetUserListInRoom(model.RoomId, false);
+            await GetUserListInRoom(model.RoomId, false, false);
         }
     }
 

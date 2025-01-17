@@ -111,7 +111,6 @@
             </div>
 
             <div class="col-12 cards-custom" id="poker-cards">
-                 
             </div>
 
         </div>
@@ -198,5 +197,17 @@
         jQuery("#btnSaveProfile").click(function(){
          roomManager.saveProfile();
         });
+
+        $(".next-round-custom").click(function () {
+                var nextRound = false;
+                if ($(".next-round-custom").html() == "Oyları Göster") {
+                    $(".next-round-custom").html("Sonraki Tur");
+                }
+                else if ($(".next-round-custom").html() == "Sonraki Tur") {
+                    $(".next-round-custom").html("Oyları Göster");
+                    nextRound = true;
+                }
+                roomManager.nextRound(true, nextRound);
+            });
     </script>
 }
