@@ -4,6 +4,11 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ContainerUser>root</ContainerUser>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <UserSecretsId>c0278221-3d54-4d10-93ea-4efe71a4c41a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

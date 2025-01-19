@@ -12,6 +12,7 @@ builder.Services.AddDataProviderServices();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddSignalR();
+builder.Services.AddHealthChecks();
 builder.Services.AddSession(option =>
 {
     //Süre 1 dk olarak belirlendi
@@ -35,5 +36,7 @@ app.UseStaticFiles();
 app.MapControllerRoute(name: "default", pattern: "dashboard");
 
 app.MapHub<PokerRoomHub>("/roomHub");
+
+app.MapHealthChecks("/health");
 
 app.Run();

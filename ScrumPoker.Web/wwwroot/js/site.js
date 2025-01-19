@@ -8,9 +8,19 @@ class RoomManager {
         this.connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
         this.selectedCard = null; // Seçilen kart bilgisini saklamak için
         this.cardValues = [1, 2, 3, 5, 8, 13, 21]; // Kart puanları
-
         this.setupConnection();
         this.createCards(); // Kartları oluştur
+        this.chartInstance; 
+    }
+
+    hideMyChart() {
+        $("#divMyChart").css("visibility", "hidden");
+        $("#divMyChart").css("height", "0px");
+    }
+
+    showMyChart() {
+        $("#divMyChart").css("visibility", "visible");
+        $("#divMyChart").css("height", "300px");
     }
 
     setupConnection() {
@@ -37,11 +47,21 @@ class RoomManager {
 
         this.joinRoom(this.roomId);
         $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
-        $(".next-round-custom").off('click');
+        this.hideMyChart();
+
+        if (!window.isOwner) {
+           $(".next-round-custom").off('click');
+        }
     }
 
-    nextRound(isAdmin, resetAllVotes) {
-        this.getUserListInRoom(this.roomId, isAdmin, resetAllVotes);
+    nextRound() {
+        this.hideMyChart();
+        this.getUserListInRoom(this.roomId, false, true);
+    }
+
+    showRoundResults() {
+        this.hideMyChart();
+        this.getUserListInRoom(this.roomId, true, false);
     }
 
     handleReceiveVote(data) {
@@ -88,27 +108,23 @@ class RoomManager {
         this.connection.invoke("Join", roomId, userId).catch((err) => console.error(err.toString()));
     }
 
-    setOnClickEvents() {
-        
-    }
-
+    // Poker kartına tıklandığında çalışır.
     sendCardToServer(votePoint) {
         const userId = $("#userId").val();
         const data = { UserId: userId, VotePoint: votePoint, RoomId: this.roomId };
 
         console.log(`${userId} : ${votePoint}`);
         this.connection.invoke("SendVote", data).catch((err) => console.error(err.toString()));
-
         if (this.isOwner === "True") {
             $(".next-round-custom").html("Oyları Göster");
-            
+            $(".next-round-custom").on('click');
+            console.log(".next-round-custom -- ON");
         } else {
             $(".next-round-custom").html("Oda sahibi bekleniyor..");
             $(".next-round-custom").off('click');
+            console.log(".next-round-custom -- OFF");
         }
     }
-
-    
 
     // Kartları oluşturan fonksiyon
     createCards() {
@@ -176,9 +192,12 @@ class RoomManager {
     }
 
     renderChart(allVotes) {
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+        }
+        this.showMyChart();
         const uniqueVotes = [...new Set(allVotes)];
         const chartData = uniqueVotes.map(vote => allVotes.filter(x => x === vote).length);
-
         const data = {
             labels: uniqueVotes,
             datasets: [{
@@ -190,7 +209,7 @@ class RoomManager {
         };
 
         const ctx = document.getElementById('myChart');
-        new Chart(ctx, { type: 'doughnut', data });
+        this.chartInstance = new Chart(ctx, { type: 'doughnut', data });
     }
 
     getVoteMarkup(votePoint, isAdminOpenedCards) {
@@ -212,7 +231,7 @@ class RoomManager {
     }
 
     createPokerTableRow(user, vote) {
-        return `<div class="col-md-1">
+        return `<div class="col-md-1" style="margin: 10px;">
                     <div class="text-center card">
                         <div class="card-body" style="padding:0 !important">
                             <div class="pt-2 pb-2">
@@ -227,7 +246,7 @@ class RoomManager {
 
     createAvatarMarkup(user) {
         return `<a href="javascript:void(0);" class="avatar-group-item">
-                    <img src="/images/users/user-1.jpg" class="rounded-circle avatar-md" alt="friend" 
+                    <img src="/images/users/user-4.jpg" class="rounded-circle avatar-md" alt="friend" 
                          data-bs-container="#users-in-the-room" 
                          data-bs-toggle="tooltip" 
                          data-bs-placement="bottom" 

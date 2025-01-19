@@ -102,7 +102,7 @@
                 <div class="d-flex justify-content-center gap-3 mt-4 mb-3" id="bottomUserList">
                 </div>
 
-                <div class="d-flex justify-content-center gap-3 mt-4 mb-3">
+                <div class="d-flex justify-content-center gap-3 mt-4 mb-3" id="divMyChart">
                     <div>
                         <canvas id="myChart"></canvas>
                     </div>
@@ -198,16 +198,24 @@
          roomManager.saveProfile();
         });
 
-        $(".next-round-custom").click(function () {
-                var nextRound = false;
+          $(".next-round-custom").click(function () {
                 if ($(".next-round-custom").html() == "Oyları Göster") {
                     $(".next-round-custom").html("Sonraki Tur");
+                    console.log("Oyları Göster");
+                    $("#myChart").css("visibility","visible");
+                    $("#myChart").css("height","300px");
+                    roomManager.showRoundResults();
                 }
                 else if ($(".next-round-custom").html() == "Sonraki Tur") {
                     $(".next-round-custom").html("Oyları Göster");
-                    nextRound = true;
+                    $("#myChart").css("visibility","hidden");
+                    $("#myChart").css("height","0px");
+                    console.log("Sonraki Tur");
+                    roomManager.nextRound();
                 }
-                roomManager.nextRound(true, nextRound);
+                
             });
+
+
     </script>
 }
