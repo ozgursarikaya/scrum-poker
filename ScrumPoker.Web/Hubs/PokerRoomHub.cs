@@ -43,6 +43,7 @@ namespace ScrumPoker.Web.Hubs
             GetUserListInRoomResponseModel model = new GetUserListInRoomResponseModel();
             model.IsAdminOpenedCards = isAdminOpenedCards;
             model.UserList = UserList.Where(w => w.RoomId == roomId).ToList();
+            model.NextRound = resetAllVotes;
 
             if (resetAllVotes)
             {
@@ -71,5 +72,6 @@ namespace ScrumPoker.Web.Hubs
     {
         public bool IsAdminOpenedCards { get; set; }
         public List<PokerUserModel> UserList { get; set; } = new();
+        public bool NextRound { get; set; }
     }
 }

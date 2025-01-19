@@ -2,7 +2,6 @@
 
 class RoomManager {
     constructor(roomId, isOwner) {
-        console.log("roomId: " + roomId, "isOwner: " + isOwner);
         this.roomId = roomId;
         this.isOwner = isOwner;
         this.connection = new signalR.HubConnectionBuilder().withUrl("/roomHub").build();
@@ -33,8 +32,6 @@ class RoomManager {
     }
 
     onConnectionStart() {
-        console.log("Connected!");
-
         const cookieData = this.getCookieData();
         if (cookieData) {
             $("#userId").val(cookieData.UserId);
@@ -65,12 +62,10 @@ class RoomManager {
     }
 
     handleReceiveVote(data) {
-        console.log(data);
         this.getUserListInRoom(this.roomId, false, false);
     }
 
     handleReceiveUserListInRoom(data) {
-        console.log("ReceiveUserListInRoom");
         this.clearUserLists();
 
         const allVotes = data.userList.map(user => user.votePoint);
@@ -82,10 +77,13 @@ class RoomManager {
         if (data.isAdminOpenedCards) {
             this.renderChart(allVotes);
         }
+
+        if (data.nextRound) {
+            this.hideMyChart();
+        }
     }
 
     getUserListInRoom(roomId, isAdminOpenedCards, resetAllVotes) {
-        console.log("GetUserListInRoom!");
         this.connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards, resetAllVotes).catch((err) => console.error(err.toString()));
     }
 
@@ -103,7 +101,6 @@ class RoomManager {
     }
 
     joinRoom(roomId) {
-        console.log("JoinToRoom: " + roomId);
         const userId = $("#userId").val();
         this.connection.invoke("Join", roomId, userId).catch((err) => console.error(err.toString()));
     }
@@ -113,16 +110,13 @@ class RoomManager {
         const userId = $("#userId").val();
         const data = { UserId: userId, VotePoint: votePoint, RoomId: this.roomId };
 
-        console.log(`${userId} : ${votePoint}`);
         this.connection.invoke("SendVote", data).catch((err) => console.error(err.toString()));
         if (this.isOwner === "True") {
             $(".next-round-custom").html("Oyları Göster");
             $(".next-round-custom").on('click');
-            console.log(".next-round-custom -- ON");
         } else {
             $(".next-round-custom").html("Oda sahibi bekleniyor..");
             $(".next-round-custom").off('click');
-            console.log(".next-round-custom -- OFF");
         }
     }
 
@@ -145,8 +139,6 @@ class RoomManager {
 
     // Kart tıklama olayı
     handleCardClick(value, cardElement) {
-        console.log(`Seçilen kart: ${value}`);
-
         // Önceki seçimi kaldır
         if (this.selectedCard !== null) {
             const previousSelected = document.querySelector('.card-custom.selected');
@@ -169,7 +161,7 @@ class RoomManager {
     renderUser(user, index, isAdminOpenedCards) {
         const vote = this.getVoteMarkup(user.votePoint, isAdminOpenedCards);
         const participantRow = this.createParticipantRow(user, vote);
-        const pokerTableUserRow = this.createPokerTableRow(user, vote);
+        const pokerTableUserRow = this.createPokerTableRow(user, vote, user.votePoint);
          $("#users-in-the-room").append(this.createAvatarMarkup(user));
         if (user.votePoint > 0) {
             $("#tblVotedUserList tbody").append(participantRow);
@@ -213,7 +205,6 @@ class RoomManager {
     }
 
     getVoteMarkup(votePoint, isAdminOpenedCards) {
-        console.log(votePoint + ":" + isAdminOpenedCards);
         if (votePoint > 0) {
             return isAdminOpenedCards ? `${votePoint}` : `<i class="ti-thumb-up"></i>`;
         }
@@ -230,10 +221,16 @@ class RoomManager {
                 </tr>`;
     }
 
-    createPokerTableRow(user, vote) {
+    createPokerTableRow(user, vote, votePoint) {
+        var bgColor = "#ffffff";
+
+        if (votePoint > 0) {
+            bgColor = "#ecff4c";
+        }
+
         return `<div class="col-md-1" style="margin: 10px;">
                     <div class="text-center card">
-                        <div class="card-body" style="padding:0 !important">
+                        <div class="card-body" style="padding:0 !important; background-color:${bgColor}">
                             <div class="pt-2 pb-2">
                                 <img src="/images/users/user-4.jpg" class="rounded-circle img-thumbnail avatar-xl" alt="profile-image">
                                 <h4 class="mt-3"><a href="contacts-profile.html" class="text-dark">${vote}</a></h4>
