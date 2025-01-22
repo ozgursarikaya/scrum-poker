@@ -43,11 +43,11 @@ class RoomManager {
         }
 
         this.joinRoom(this.roomId);
-        $(".next-round-custom").html("Aşağıdan bir kart seçiniz");
+        $(".live-info").html("Choose a card.");
         this.hideMyChart();
 
         if (!window.isOwner) {
-           $(".next-round-custom").off('click');
+           $(".live-info").off('click');
         }
     }
 
@@ -112,11 +112,11 @@ class RoomManager {
 
         this.connection.invoke("SendVote", data).catch((err) => console.error(err.toString()));
         if (this.isOwner === "True") {
-            $(".next-round-custom").html("Oyları Göster");
-            $(".next-round-custom").on('click');
+            $(".live-info").html("Reveal Votes");
+            $(".live-info").on('click');
         } else {
-            $(".next-round-custom").html("Oda sahibi bekleniyor..");
-            $(".next-round-custom").off('click');
+            $(".live-info").html("Waiting for the room owner..");
+            $(".live-info").off('click');
         }
     }
 
