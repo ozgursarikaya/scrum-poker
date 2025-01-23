@@ -26,9 +26,9 @@
                         <h4 class="mt-3"><a href="contacts-profile.html" class="text-dark">Sebahattin</a></h4>
                         <p class="text-muted">Room Manager</p>
 
-                        <button type="button" class="btn btn-white rounded-pill waves-effect waves-light">Oyları Göster</button>
-                        <button type="button" class="btn btn-white rounded-pill waves-effect">Sonraki Tur</button>
-                        <button type="button" class="btn btn-white rounded-pill waves-effect">Sıfırla</button>
+                        <button type="button" class="btn btn-white rounded-pill waves-effect waves-light" id="btnRevealVotes">Reveal</button>
+                        <button type="button" class="btn btn-white rounded-pill waves-effect" id="btnNextRound">Next Round</button>
+                        <button type="button" class="btn btn-white rounded-pill waves-effect" id="btnReset">Reset</button>
                     </div> <!-- end .padding -->
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
                             <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
                                 <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
-                                    <div class="simplebar-content" style="padding: 0px;">
+                                    <div class="simplebar-content" style="padding: 0px;" id="divUserList">
                                         <div class="inbox-item d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center">
                                                 <div class="inbox-item-img">
@@ -70,58 +70,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="inbox-item d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <div class="inbox-item-img">
-                                                    <img src="/images/users/user-2.jpg" class="rounded-circle" alt="" style="width: 40px; height: 40px;">
-                                                </div>
-                                                <p class="inbox-item-author mb-0">
-                                                    Rıdvan
-                                                    <br />
-                                                    <span class="badge badge-soft-secondary">Backend</span>
-                                                </p>
-
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#">Remove</a>
-                                                        <a class="dropdown-item" href="#">Make Observer</a>
-                                                        <a class="dropdown-item" href="#">Make Admin</a>
-                                                    </div>
-                                                </div>
-                                                <div class="ms-1">
-                                                    <span class="btn-white badge badge-soft-info font-13" style="padding:12px;width: 40px;"> <i class="fe-check"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="inbox-item d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <div class="inbox-item-img">
-                                                    <img src="/images/users/user-2.jpg" class="rounded-circle" alt="" style="width: 40px; height: 40px;">
-                                                </div>
-                                                <p class="inbox-item-author mb-0">
-                                                    Sebo
-                                                    <br />
-                                                    <span class="badge badge-soft-secondary">Backend</span>
-                                                </p>
-
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#">Remove</a>
-                                                        <a class="dropdown-item" href="#">Make Observer</a>
-                                                        <a class="dropdown-item" href="#">Make Admin</a>
-                                                    </div>
-                                                </div>
-                                                <div class="ms-1">
-                                                    <span class="btn-white badge badge-soft-success font-13" style="padding:12px;width: 40px;">7</span>
-                                                </div>
-                                            </div>
-                                        </div>
 
 
                                     </div>
@@ -130,38 +78,6 @@
                         </div><div class="simplebar-placeholder" style="width: auto; height: 451px;"></div>
                     </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 271px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div>
                 </div> <!-- end inbox-widget -->
-            </div>
-        </div>
-
-        <!-- ========== Waiting Start ========== -->
-        <div class="card" id="divVoteExpectedUserList">
-            <div class="card-body">
-                <h5 class="card-title mb-0">Bekliyor</h5>
-                <br />
-                <div id="cardCollpase1" class="collapse show">
-                    <div class="table-responsive">
-                        <table class="table table-centered table-nowrap table-striped" id="tblVoteExpectedUserList">
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== Done Start ========== -->
-        <div class="card" id="divVotedUserList">
-            <div class="card-body">
-                <h5 class="card-title text-success mb-0">Oy Verildi</h5>
-                <br />
-                <div id="cardCollpase1" class="collapse show">
-                    <div class="table-responsive">
-                        <table class="table table-centered table-nowrap table-striped" id="tblVotedUserList">
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -217,25 +133,21 @@
                 <div class="card mb-2">
                     <div class="card-body">
                         <div class="row justify-content-between">
-                            <div class="col-3">
+                            <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body text-secondary">
-                                        <div class="d-flex justify-content-center gap-3 mt-4 mb-3" id="divMyChart">
-                                            <div>
+                                        <div class="d-flex chart-container" id="divMyChart">
+                                             
                                                 <canvas id="myChart"></canvas>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div> <!-- end card-->
                             </div>
-                            <div class="col-auto">
+                            <div class="col-lg-6">
                                 <div class="card ">
                                     <div class="card-body text-secondary">
-                                        <div class="d-flex justify-content-center gap-3 mt-4 mb-3" id="divMyChart">
-                                            <div>
-                                                <canvas id="myChart"></canvas>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div> <!-- end card-->
                             </div>
@@ -328,24 +240,18 @@
          roomManager.saveProfile();
         });
 
-          $(".next-round-custom").click(function () {
-                if ($(".next-round-custom").html() == "Oyları Göster") {
-                    $(".next-round-custom").html("Sonraki Tur");
-                    console.log("Oyları Göster");
-                    $("#myChart").css("visibility","visible");
-                    $("#myChart").css("height","300px");
-                    roomManager.showRoundResults();
-                }
-                else if ($(".next-round-custom").html() == "Sonraki Tur") {
-                    $(".next-round-custom").html("Oyları Göster");
-                    $("#myChart").css("visibility","hidden");
-                    $("#myChart").css("height","0px");
-                    console.log("Sonraki Tur");
-                    roomManager.nextRound();
-                }
-
+          $("#btnRevealVotes").click(function () {
+                $("#myChart").css("visibility","visible");
+                $("#myChart").css("height","300px");
+                roomManager.showRoundResults();
             });
 
+            $("#btnNextRound").click(function () {
+                $("#myChart").css("visibility","hidden");
+                $("#myChart").css("height","0px");
+                console.log("Sonraki Tur");
+                roomManager.nextRound();
+            });
 
     </script>
 }

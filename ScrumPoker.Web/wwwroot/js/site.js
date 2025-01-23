@@ -73,7 +73,6 @@ class RoomManager {
             this.renderUser(item, index, data.isAdminOpenedCards);
         });
 
-        this.updateVoteSectionsVisibility();
         if (data.isAdminOpenedCards) {
             this.renderChart(allVotes);
         }
@@ -155,32 +154,14 @@ class RoomManager {
     }
 
     clearUserLists() {
-        $("#tblVotedUserList tbody, #tblVoteExpectedUserList tbody, #topUserList, #bottomUserList, #users-in-the-room").html("");
+        $("#divUserList").html("");
     }
 
     renderUser(user, index, isAdminOpenedCards) {
         const vote = this.getVoteMarkup(user.votePoint, isAdminOpenedCards);
         const participantRow = this.createParticipantRow(user, vote);
-        const pokerTableUserRow = this.createPokerTableRow(user, vote, user.votePoint);
-         $("#users-in-the-room").append(this.createAvatarMarkup(user));
-        if (user.votePoint > 0) {
-            $("#tblVotedUserList tbody").append(participantRow);
-        } else {
-            $("#tblVoteExpectedUserList tbody").append(participantRow);
-        }
-
-        if (index % 2 === 0) {
-            $("#topUserList").append(pokerTableUserRow);
-        } else {
-            $("#bottomUserList").append(pokerTableUserRow);
-        }
-
+        $("#divUserList").append(participantRow);
         $('[data-bs-toggle="tooltip"]').tooltip();
-    }
-
-    updateVoteSectionsVisibility() {
-        $("#divVotedUserList").toggle($("#tblVotedUserList tbody").html().length > 0);
-        $("#divVoteExpectedUserList").toggle($("#tblVoteExpectedUserList tbody").html().length > 0);
     }
 
     renderChart(allVotes) {
@@ -196,59 +177,90 @@ class RoomManager {
                 label: 'Vote',
                 data: chartData,
                 backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
-                hoverOffset: 4
+                hoverOffset: 1
             }]
         };
 
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Results'
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        barThickness: 5
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            callback: function (value) {
+                                // Sadece tam sayılar görünsün
+                                if (Number.isInteger(value)) {
+                                    return value;
+                                }
+                                return null;
+                            }
+                        }
+                    }
+                }
+            },
+        };
+
         const ctx = document.getElementById('myChart');
-        this.chartInstance = new Chart(ctx, { type: 'doughnut', data });
+        this.chartInstance = new Chart(ctx, config);
     }
 
     getVoteMarkup(votePoint, isAdminOpenedCards) {
+        var votePointSpan = `<span class="btn-white badge badge-soft-success font-13" style="padding: 12px; width: 40px;">${votePoint}</span>`;
+        var votedSpan = `<span class="btn-white badge badge-soft-info font-13" style="padding:12px;width: 40px;"> <i class="fe-check"></i></span>`;
+        var voteWaitingSpan = `<span class="btn-white badge badge-soft-dark font-13" style="padding:12px;width: 40px;"> <i class="ti-time"></i></span>`;
         if (votePoint > 0) {
-            return isAdminOpenedCards ? `${votePoint}` : `<i class="ti-thumb-up"></i>`;
+            return isAdminOpenedCards ? votePointSpan : votedSpan;
         }
-        return `<i class="ti-time"></i>`;
+        return voteWaitingSpan;
     }
 
     createParticipantRow(user, vote) {
-        return `<tr class="newRow">
-                    <td class="table-user">
-                        <img src="/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                        <a href="javascript:void(0);" class="text-body fw-semibold">${user.userName}</a>
-                    </td>
-                    <td align="right">${vote}</td>
-                </tr>`;
-    }
+        return `<div class="inbox-item d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="inbox-item-img">
+                            <img src="/images/users/user-2.jpg" class="rounded-circle" alt="" style="width: 40px; height: 40px;">
+                        </div>
+                        <p class="inbox-item-author mb-0">
+                            ${user.userName}
+                            <br />
+                            <span class="badge badge-soft-secondary">Backend</span>
+                        </p>
 
-    createPokerTableRow(user, vote, votePoint) {
-        var bgColor = "#ffffff";
-
-        if (votePoint > 0) {
-            bgColor = "#ecff4c";
-        }
-
-        return `<div class="col-md-1" style="margin: 10px;">
-                    <div class="text-center card">
-                        <div class="card-body" style="padding:0 !important; background-color:${bgColor}">
-                            <div class="pt-2 pb-2">
-                                <img src="/images/users/user-4.jpg" class="rounded-circle img-thumbnail avatar-xl" alt="profile-image">
-                                <h4 class="mt-3"><a href="contacts-profile.html" class="text-dark">${vote}</a></h4>
-                                <p class="text-muted">${user.userName}</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Remove</a>
+                                <a class="dropdown-item" href="#">Make Observer</a>
+                                <a class="dropdown-item" href="#">Make Admin</a>
                             </div>
+                        </div>
+                        <div class="ms-1">
+                            ${vote}
                         </div>
                     </div>
                 </div>`;
-    }
-
-    createAvatarMarkup(user) {
-        return `<a href="javascript:void(0);" class="avatar-group-item">
-                    <img src="/images/users/user-4.jpg" class="rounded-circle avatar-md" alt="friend" 
-                         data-bs-container="#users-in-the-room" 
-                         data-bs-toggle="tooltip" 
-                         data-bs-placement="bottom" 
-                         title="${user.userName}">
-                </a>`;
     }
 
     getCookieData() {

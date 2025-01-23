@@ -89,3 +89,16 @@
     position: relative !important;
     overflow: visible !important;
 }
+
+.chart-container {
+    width: 600px;
+    height: 300px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
