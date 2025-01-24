@@ -125,7 +125,7 @@ class RoomManager {
 
         this.cardValues.forEach((value) => {
             const card = document.createElement('button');
-            card.className = 'card-custom';
+            card.className = 'btn btn-white rounded-pill waves-effect card-custom';
             card.textContent = value;
 
             card.addEventListener('click', () => {
@@ -174,7 +174,7 @@ class RoomManager {
         const data = {
             labels: uniqueVotes,
             datasets: [{
-                label: 'Vote',
+                label: 'Vote Count',
                 data: chartData,
                 backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
                 hoverOffset: 1
@@ -188,11 +188,11 @@ class RoomManager {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'top',
+                        display: false
                     },
                     title: {
                         display: true,
-                        text: 'Results'
+                        text: 'Vote Distribution Chart'
                     }
                 },
                 scales: {
@@ -200,7 +200,7 @@ class RoomManager {
                         grid: {
                             display: false
                         },
-                        barThickness: 5
+                        barThickness: 2
                     },
                     y: {
                         grid: {
