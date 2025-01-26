@@ -8,5 +8,6 @@
         public string Cid { get; set; }
         public string RoomId { get; set; }
         public bool IsJoin { get; set; }
+        public string TaskId { get; set; }
     }
 }

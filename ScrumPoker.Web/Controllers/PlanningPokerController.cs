@@ -35,6 +35,7 @@ namespace ScrumPoker.Web.Controllers
             HttpContext.Session.SetString("IsOwner", "true");
             
             StaticData.RoomList.Add(model);
+            StaticData.CreateTempTaskList();
 
             return Json(new { RedirectLink = Url.RouteUrl("PlanningPokerRoom", new { roomId = model.Id }) });
         }

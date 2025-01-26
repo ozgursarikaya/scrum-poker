@@ -10,6 +10,7 @@ class RoomManager {
         this.setupConnection();
         this.createCards(); // Kartları oluştur
         this.chartInstance; 
+        this.votedTaskId;
     }
 
     hideMyChart() {
@@ -25,6 +26,7 @@ class RoomManager {
     setupConnection() {
         this.connection.on("ReceiveVote", (data) => this.handleReceiveVote(data));
         this.connection.on("ReceiveUserListInRoom", (data) => this.handleReceiveUserListInRoom(data));
+        this.connection.on("ReceiveTaskList", (data) => this.handleReceiveTaskList(data));
 
         this.connection.start()
             .then(() => this.onConnectionStart())
@@ -49,6 +51,8 @@ class RoomManager {
         if (!window.isOwner) {
            $(".live-info").off('click');
         }
+
+        this.getTaskList(this.roomId);
     }
 
     nextRound() {
@@ -58,7 +62,16 @@ class RoomManager {
 
     showRoundResults() {
         this.hideMyChart();
-        this.getUserListInRoom(this.roomId, true, false);
+        this.getUserListInRoom(this.roomId, true, false, this.votedTaskId);
+        this.getTaskList(this.roomId);
+    }
+
+    handleReceiveTaskList(data) {
+        //this.clearTaskLists();
+
+        data.forEach((item, index) => {
+            this.renderTask(item, index, data.length);
+        });
     }
 
     handleReceiveVote(data) {
@@ -82,8 +95,12 @@ class RoomManager {
         }
     }
 
-    getUserListInRoom(roomId, isAdminOpenedCards, resetAllVotes) {
-        this.connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards, resetAllVotes).catch((err) => console.error(err.toString()));
+    getUserListInRoom(roomId, isAdminOpenedCards, resetAllVotes, votedTaskId) {
+        this.connection.invoke("GetUserListInRoom", roomId, isAdminOpenedCards, resetAllVotes, votedTaskId).catch((err) => console.error(err.toString()));
+    }
+
+    getTaskList(roomId) {
+        this.connection.invoke("GetTaskList", roomId).catch((err) => console.error(err.toString()));
     }
 
     saveProfile() {
@@ -107,8 +124,8 @@ class RoomManager {
     // Poker kartına tıklandığında çalışır.
     sendCardToServer(votePoint) {
         const userId = $("#userId").val();
-        const data = { UserId: userId, VotePoint: votePoint, RoomId: this.roomId };
-
+        const data = { UserId: userId, VotePoint: votePoint, RoomId: this.roomId, TaskId: this.votedTaskId };
+        console.log(data);
         this.connection.invoke("SendVote", data).catch((err) => console.error(err.toString()));
         if (this.isOwner === "True") {
             $(".live-info").html("Reveal Votes");
@@ -162,6 +179,46 @@ class RoomManager {
         const participantRow = this.createParticipantRow(user, vote);
         $("#divUserList").append(participantRow);
         $('[data-bs-toggle="tooltip"]').tooltip();
+    }
+
+    renderTask(taskData, index, dataCount) {
+        console.log("index>" + index + "== dataCount> " + dataCount);
+
+        if (index == dataCount - 1) {
+            
+            $(".vote-task .card-title .code").html(taskData.taskNoWithTeamPrefix);
+            $(".vote-task .card-title .title").html(taskData.title);
+            this.votedTaskId = taskData.id;
+        }
+        else {
+            const taskRow = this.taskRow(taskData);
+            $("#divTaskList").append(taskRow);
+        }
+    }
+
+    taskRow(data) {
+        console.log(data);
+        var voteStatusText = data.isVoted ? "Voted" : "Not Voted";
+        var borderClass = data.isVoted ? "border-success" : "border-dark";
+        return `<div class="card border ${borderClass}">
+                <div class="card-body">
+                    <span class="badge badge-soft-dark float-end">${data.taskNoWithTeamPrefix}</span>
+                    <h5 class="mt-0"><a href="javascript: void(0);" class="text-success">${data.title}</a></h5>
+
+                    <p>There are many variations of passages of Lorem Ipsum available.</p>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-white rounded-pill waves-effect" id="btnReset">Vote Again</button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="text-end text-muted">
+                                <p class="font-13 mt-2 mb-0">${voteStatusText}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end card-body-->
+            </div>`;
     }
 
     renderChart(allVotes) {
