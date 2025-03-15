@@ -4,12 +4,79 @@
 }
 
 <!DOCTYPE html>
+<html lang="en" data-layout-mode="detached" data-topbar-color="dark" data-sidenav-user="true">
 
-<html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Logout</title>
+    <meta charset="utf-8" />
+    <title>LetsBet | Logout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+    <script src="~/js/head.js"></script>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="~/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+
+<body class="auth-fluid-pages pb-0">
+
+    <div class="auth-fluid">
+
+        <div class="auth-fluid-form-box">
+            <div class="align-items-center d-flex h-100">
+                <div class="p-3">
+
+                    <!-- Logo -->
+                    <div class="auth-brand text-center text-lg-start">
+                        <div class="auth-brand">
+                            <a href="@Url.RouteUrl("AuthenticationLogin")" class="logo logo-dark text-center">
+                                <span class="logo-lg">
+                                    <img src="~/images/letsbet-logo-dark.png" alt="" height="22">
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="text-center w-100">
+                        <div class="mt-4">
+                            <div class="logout-checkmark">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                                    <circle class="path circle" fill="none" stroke="#4bd396" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+                                    <polyline class="path check" fill="none" stroke="#4bd396" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <h3>See you again !</h3>
+                        <p class="text-muted"> You are now successfully sign out. </p>
+
+                    </div>
+
+                    <footer class="footer footer-alt">
+                        <p class="text-muted">Don't have an account? <a href="@Url.RouteUrl("AuthenticationSignUp")" class="text-muted ms-1"><b>Sign Up</b></a></p>
+                    </footer>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-fluid-right text-center">
+            <div class="auth-user-testimonial">
+                <p class="lead">
+                    <i class="mdi mdi-format-quote-open"></i>
+                    Coming together is a beginning, staying together is progress<br />and working together is success.
+                    <i class="mdi mdi-format-quote-close"></i>
+                </p>
+                <h5 class="text-white">
+                    - Henry Ford
+                </h5>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="~/js/pages/authentication.init.js"></script>
+
 </body>
 </html>
+

@@ -1,5 +1,4 @@
-﻿@using ScrumPoker.Web.Models
-@model AuthenticationLoginViewModel
+﻿
 @{
     Layout = null;
 }
@@ -10,7 +9,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>LetsBet | Login</title>
+    <title>LetsBet | Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="~/images/favicon.ico">
     <script src="~/js/head.js"></script>
@@ -39,16 +38,16 @@
                     </div>
 
                     <!-- title-->
-                    <h4 class="mt-0">Sign In</h4>
-                    <p class="text-muted mb-4">Enter your email address and password to access account.</p>
+                    <h4 class="mt-0">Sign Up</h4>
+                    <p class="text-muted mb-4">Please fill all inputs.</p>
 
                     <!-- form -->
-                    @using (Html.BeginRouteForm("AuthenticationLoginPost", FormMethod.Post))
+                    @using (Html.BeginRouteForm("AuthenticationSignUpPost", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <label for="emailaddress" class="form-label">Email address</label>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "emailaddress",placeholder = "Enter your email", type="email" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "emailaddress", placeholder = "Enter your email", type = "email" })
                         </div>
                         <div class="mb-3">
                             <a href="@Url.RouteUrl("AuthenticationForgotPassword")" class="text-muted float-end"><small>Forgot your password?</small></a>
@@ -63,7 +62,7 @@
 
                         <div class="mb-3">
                             <div class="form-check">
-                                @Html.CheckBoxFor(m => m.RememberMe, new { @class="form-check-label", @for="checkbox-signin"})
+                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-label", @for = "checkbox-signin" })
                                 <label class="form-check-label" for="checkbox-signin">Remember me</label>
                             </div>
                         </div>
@@ -83,8 +82,8 @@
         <div class="auth-fluid-right text-center">
             <div class="auth-user-testimonial">
                 <p class="lead">
-                    <i class="mdi mdi-format-quote-open"></i> 
-                        Coming together is a beginning, staying together is progress<br />and working together is success. 
+                    <i class="mdi mdi-format-quote-open"></i>
+                    Coming together is a beginning, staying together is progress<br />and working together is success.
                     <i class="mdi mdi-format-quote-close"></i>
                 </p>
                 <h5 class="text-white">
@@ -100,3 +99,4 @@
 
 </body>
 </html>
+
