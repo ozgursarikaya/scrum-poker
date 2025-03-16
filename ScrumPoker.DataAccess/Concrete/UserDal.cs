@@ -38,4 +38,14 @@ public class UserDal : IUserDal
     {
         return await _dataProvider.Get<bool>(StoredProcedureNames.UpdateUserPassword, request);
     }
+
+	public async Task<bool> ProfileSave(ProfileSaveRequestDto request)
+	{
+		return await _dataProvider.Update(StoredProcedureNames.UpdateUserProfile, request);
+	}
+
+	public async Task<bool> ChangePassword(ChangePasswordRequestDto request)
+	{
+		return await _dataProvider.Update(StoredProcedureNames.ChangeUserPassword, new { Id = request.Id, PasswordHash = request.NewPasswordHash, PasswordSalt = request.NewPasswordSalt });
+	}
 }

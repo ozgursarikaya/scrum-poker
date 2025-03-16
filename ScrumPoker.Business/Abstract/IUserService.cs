@@ -10,4 +10,7 @@ public interface IUserService
     Task<bool> ForgetPasswordOperation(string email);
     Task<UserDto> Get(UserGetRequestDto request);
     Task<bool> UpdatePassword(AuthResetPasswordRequestDto request);
+    Task<bool> ProfileSave(ProfileSaveRequestDto request);
+    Task<bool> ChangePassword(ChangePasswordRequestDto request);
+
 }

@@ -6,26 +6,27 @@ namespace ScrumPoker.Helper
 {
 	public static class PasswordHelper
 	{
-        public static async Task<bool> VerifyPassword(VerifyPasswordRequestDto request)
+        public static async Task<bool> VerifyPassword(string password, byte[] storedSalt, byte[] storedHash)
         {
-            using (var hmac = new HMACSHA512(request.StoredSalt))
+            using (var hmac = new HMACSHA512(storedSalt))
             {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
-                return CryptographicOperations.FixedTimeEquals(computedHash, request.StoredHash);
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return CryptographicOperations.FixedTimeEquals(computedHash, storedHash);
             }
         }
 
-        public static async Task<CreatePasswordResponseDto> CreatePassword(string password)
+        public static async Task<Tuple<byte[], byte[]>> CreatePassword(string password)
         {
-            CreatePasswordResponseDto result = new CreatePasswordResponseDto();
+            byte[] passwordHash;
+            byte[] passwordSalt;
 
-            using (var hmac = new HMACSHA512())
+			using (var hmac = new HMACSHA512())
             {
-                result.PasswordSalt = hmac.Key;
-                result.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
 
-            return result;
+            return Tuple.Create(passwordHash, passwordSalt);
         }
     }
 }

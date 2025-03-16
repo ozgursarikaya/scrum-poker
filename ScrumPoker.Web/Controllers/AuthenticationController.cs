@@ -10,11 +10,13 @@ namespace ScrumPoker.Web.Controllers
     public class AuthenticationController : BaseController
     {
 		private readonly IUserService _userService;
+        private readonly IAvatarService _avatarService;
 
-        public AuthenticationController(IUserService userService)
+		public AuthenticationController(IUserService userService, IAvatarService avatarService)
         {
             _userService = userService;
-        }
+			_avatarService = avatarService;
+		}
 
         [Route("login", Name = "AuthenticationLogin")]
         public async Task<IActionResult> Login()
@@ -30,16 +32,16 @@ namespace ScrumPoker.Web.Controllers
 			return View(vm);
         }
 
+		[HttpPost]
 		[Route("login", Name = "AuthenticationLoginPost")]
 		[ValidateAntiForgeryToken]
-		[HttpPost]
 		public async Task<IActionResult> Login(AuthenticationLoginViewModel vm)
 		{
 			try
 			{
                 if (!ModelState.IsValid)
                 {
-                    SetException(new Exception("Email ve şifrenizi giriniz."));
+                    SetException(new Exception("Enter your email and password."));
                     return View(vm);
                 }
 
@@ -51,7 +53,7 @@ namespace ScrumPoker.Web.Controllers
 				});
                 if (userLoginData == null)
                 {
-                    SetException(new Exception("Email veya şifreniz hatalı."));
+                    SetException(new Exception("You have entered incorrect data."));
                     return View(vm);
                 }
 
@@ -77,17 +79,25 @@ namespace ScrumPoker.Web.Controllers
 
 		[Route("signup", Name = "AuthenticationSignUp")]
 		public async Task<IActionResult> SignUp()
-		{
-			var numberList = RandomHelper.GetRandomNumbers(1, 30, 12);
+		{			
 			AuthenticationSignUpViewModel vm = new AuthenticationSignUpViewModel();
-			foreach (var number in numberList) 
-			{
-				vm.AvatarList.Add("../images/avatars/avatar-" + number.ToString() + ".jpg");
-			}
+            vm.AvatarList = await _avatarService.GetList();
 			return View(vm);
 		}
 
-        [Route("forgot-password", Name = "AuthenticationForgotPassword")]
+		[HttpPost]
+		[Route("signup", Name = "AuthenticationSignUpPost")]
+		public async Task<IActionResult> SignUp(AuthenticationSignUpViewModel vm)
+		{
+            if (ModelState.IsValid)
+            {
+                return RedirectToRoute("DashboardIndex");
+            }
+			vm.AvatarList = await _avatarService.GetList();
+			return View(vm);
+		}
+
+		[Route("forgot-password", Name = "AuthenticationForgotPassword")]
         public async Task<IActionResult> ForgotPassword()
         {
             return View();
@@ -99,19 +109,19 @@ namespace ScrumPoker.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                SetException(new Exception("Email adresinizi giriniz."));
+                SetException(new Exception("Please enter your email address."));
                 return View(vm);
             }
 
             bool result = await _userService.ForgetPasswordOperation(vm.Email);
             if (!result)
             {
-                SetException(new Exception("Bir hata oluştu. Lütfen yeniden deneyiniz."));
+                SetException(new Exception("An error occurred. Please try again."));
                 return View(vm);
             }
             else
             {
-                SetUiMessage(true, "Şifrenizi sıfırlamak için email adresinize gönderilen şifre sıfırlama linkine tıklayabilirsiniz.");
+                SetUiMessage(true, "To reset your password, you can click on the password reset link sent to your email address.");
                 return RedirectToAction("Login");
             }
         }
@@ -131,7 +141,7 @@ namespace ScrumPoker.Web.Controllers
             }
             else
             {
-                SetException(new Exception("Şifre sıfırlama linkinizin süresi dolduğu için bu işlemi gerçekleştiremezsiniz. Tekrar şifremi unuttum talebi gönderebilirsiniz."));
+                SetException(new Exception("You cannot perform this action because your password reset link has expired. You can send a forgot password request again."));
                 return View(vm);
             }
         }
@@ -148,8 +158,8 @@ namespace ScrumPoker.Web.Controllers
                 bool resetResult = await _userService.UpdatePassword(new AuthResetPasswordRequestDto()
                 {
                     ForgetPasswordKey = vm.ForgetPasswordKey,
-                    PasswordHash = Convert.ToBase64String(newPassword.PasswordHash),
-                    PasswordSalt = Convert.ToBase64String(newPassword.PasswordSalt)
+                    PasswordHash = Convert.ToBase64String(newPassword.Item1),
+                    PasswordSalt = Convert.ToBase64String(newPassword.Item2)
                 });
 
                 if (!resetResult)
@@ -160,12 +170,12 @@ namespace ScrumPoker.Web.Controllers
 
             if (!hasError)
             {
-                SetUiMessage(true, "Şifre sıfırlama işlemi başarılı. Yeni şifreniz ile giriş yapabilirsiniz.");
+                SetUiMessage(true, "Password reset process is successful. You can log in with your new password.");
                 return RedirectToAction("Login");
             }
             else
             {
-                SetException(new Exception("Bir hata oluştu. Lütfen yeniden deneyiniz."));
+                SetException(new Exception("An error occurred. Please try again."));
                 return View(vm);
             }
         }

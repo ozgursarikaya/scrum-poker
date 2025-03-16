@@ -20,7 +20,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IUserTokenService, UserTokenService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IAvatarService, AvatarService>();
 
-        return services;
+		return services;
     }
 }

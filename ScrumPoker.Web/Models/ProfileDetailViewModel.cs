@@ -6,10 +6,10 @@ namespace ScrumPoker.Web.Models
 	{
 		public ProfileDetailViewModel()
 		{
-			User = new UserDto();
+			User = new ProfileSaveRequestDto();
 			ChangePassword = new ChangePasswordRequestDto();
 		}
-		public UserDto User { get; set; }
+		public ProfileSaveRequestDto User { get; set; }
 		public ChangePasswordRequestDto ChangePassword { get; set; }
 	}
 }

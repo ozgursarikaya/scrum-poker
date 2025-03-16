@@ -9,4 +9,6 @@ public interface IUserDal
     Task<UserDto> Get(UserGetRequestDto request);
     Task<UpdateForgetPasswordResponseDto> UpdateForgetPassword(string email);
     Task<bool> UpdatePassword(AuthResetPasswordRequestDto request);
+    Task<bool> ProfileSave(ProfileSaveRequestDto request);
+    Task<bool> ChangePassword(ChangePasswordRequestDto request);
 }

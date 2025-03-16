@@ -60,21 +60,16 @@ public class UserService : IUserService
         var user = await _userDal.Get(new UserGetRequestDto() { Email = request.Email });
         if (user != null)
         {
-            bool isValidPassword = await PasswordHelper.VerifyPassword(new VerifyPasswordRequestDto()
-            {
-                Password = request.Password,
-                StoredHash = Convert.FromBase64String(user.PasswordHash),
-                StoredSalt = Convert.FromBase64String(user.PasswordSalt)
-            });
+            bool isValidPassword = await PasswordHelper.VerifyPassword(request.Password, Convert.FromBase64String(user.PasswordSalt), Convert.FromBase64String(user.PasswordHash));
 
             if (!isValidPassword)
             {
-                throw new Exception("Hatalı giriş yaptınız.");
+                throw new Exception("You have entered incorrect data.");
             }
         }
         else
         {
-            throw new Exception("Hatalı giriş yaptınız.");
+            throw new Exception("You have entered incorrect data.");
         }
 
         var userData = new UserDataDto()
@@ -118,10 +113,10 @@ public class UserService : IUserService
                     string domainUrl = _configuration.GetSection("AppSettings:DomainUrl").Value!;
                     await _emailService.Send(new EmailSendModelDto()
                     {
-                        Subject = "Şifremi Sıfırla | Monster Poker",
+                        Subject = "Reset Password | Monster Poker",
                         TemplateName = "MailResetPassword",
                         Email = userData.Email,
-                        Body = $"<p>Şifrenizi sıfırlamak için <a href=\"{domainUrl}/auth/reset-password/{forgetPassResult.ForgetPasswordKey}\">buraya</a> tıklayınız.</p>"
+                        Body = $"<p>Click <a href=\"{domainUrl}/auth/reset-password/{forgetPassResult.ForgetPasswordKey}\">here</a> to reset your password.</p>"
                     });
 
                     result = true;
@@ -135,4 +130,31 @@ public class UserService : IUserService
 
         return result;
     }
+
+    public async Task<bool> ProfileSave(ProfileSaveRequestDto request)
+    {
+        return await _userDal.ProfileSave(request);  
+    }
+	public async Task<bool> ChangePassword(ChangePasswordRequestDto request)
+	{
+        bool isOk = false;
+		var user = await _userDal.Get(new UserGetRequestDto() { Id = request.Id });
+		if (user != null)
+		{
+			bool isValidPassword = await PasswordHelper.VerifyPassword(request.OldPassword, Convert.FromBase64String(user.PasswordSalt), Convert.FromBase64String(user.PasswordHash));
+
+			if (!isValidPassword)
+			{
+				throw new Exception("You have entered incorrect data.");
+			}
+
+			var newPassword = await PasswordHelper.CreatePassword(request.NewPassword1);
+			request.NewPasswordHash = Convert.ToBase64String(newPassword.Item1);
+            request.NewPasswordSalt = Convert.ToBase64String(newPassword.Item2);
+
+			isOk = await _userDal.ChangePassword(request);
+
+		}
+		return isOk;
+	}
 }
