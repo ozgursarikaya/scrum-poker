@@ -90,5 +90,19 @@
 
     @RenderSection("Scripts",false)
 
+    @if (TempData["UiMessage"] != null)
+    {
+        var message = TempData.Get<UiMessageModel>("UiMessage");
+        <script>
+            Swal.fire({
+            icon: "@message!.Type",
+            text: "@Html.Raw(message!.Message)" ,
+            confirmButtonText: "Tamam",
+            });
+        </script>
+
+        TempData["UiMessage"] = null;
+    }
+
 </body>
 </html>

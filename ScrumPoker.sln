@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumPoker.DataAccess", "Sc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumPoker.DataProvider", "ScrumPoker.DataProvider\ScrumPoker.DataProvider.csproj", "{6EAF82AC-3E3A-49DA-9F31-377964BBDFA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumPoker.CustomException", "ScrumPoker.CustomException\ScrumPoker.CustomException.csproj", "{29F46074-5691-4744-8838-F5493A599EC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumPoker.Localization", "ScrumPoker.Localization\ScrumPoker.Localization.csproj", "{9436F4F2-A022-439D-A261-2DCA596FDD12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{6EAF82AC-3E3A-49DA-9F31-377964BBDFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EAF82AC-3E3A-49DA-9F31-377964BBDFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EAF82AC-3E3A-49DA-9F31-377964BBDFA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F46074-5691-4744-8838-F5493A599EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F46074-5691-4744-8838-F5493A599EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F46074-5691-4744-8838-F5493A599EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F46074-5691-4744-8838-F5493A599EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9436F4F2-A022-439D-A261-2DCA596FDD12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9436F4F2-A022-439D-A261-2DCA596FDD12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9436F4F2-A022-439D-A261-2DCA596FDD12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9436F4F2-A022-439D-A261-2DCA596FDD12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +81,8 @@ Global
 		{F62CD148-CF81-468C-A7B6-AF0887F2BBBC} = {5137D919-EF34-4702-80EC-0DE07B3B0C68}
 		{623229E9-42CD-4051-8E12-E92DFD72FDDC} = {84EC2096-033C-42A9-A4AE-134F6EEA5E10}
 		{6EAF82AC-3E3A-49DA-9F31-377964BBDFA4} = {8FCA2161-613E-48D2-AEEF-F3735C67D3CD}
+		{29F46074-5691-4744-8838-F5493A599EC5} = {84EC2096-033C-42A9-A4AE-134F6EEA5E10}
+		{9436F4F2-A022-439D-A261-2DCA596FDD12} = {84EC2096-033C-42A9-A4AE-134F6EEA5E10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {06697BBF-D62F-4794-AE10-7C23D3C82AA4}

@@ -1,31 +1,31 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using ScrumPoker.Dto;
 
 namespace ScrumPoker.Helper
 {
 	public static class PasswordHelper
 	{
-		public static async Task<bool> VerifyPassword(string password, byte[] storedHash, byte[] storedSalt)
-		{
-			using (var hmac = new HMACSHA512(storedSalt))
-			{
-				var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-				return CryptographicOperations.FixedTimeEquals(computedHash, storedHash);
-			}
-		}
+        public static async Task<bool> VerifyPassword(VerifyPasswordRequestDto request)
+        {
+            using (var hmac = new HMACSHA512(request.StoredSalt))
+            {
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
+                return CryptographicOperations.FixedTimeEquals(computedHash, request.StoredHash);
+            }
+        }
 
-		public static async Task<Tuple<byte[], byte[]>> CreatePassword(string password)
-		{
-			byte[] passwordSalt;
-			byte[] passwordHash;
+        public static async Task<CreatePasswordResponseDto> CreatePassword(string password)
+        {
+            CreatePasswordResponseDto result = new CreatePasswordResponseDto();
 
-			using (var hmac = new HMACSHA512())
-			{
-				passwordSalt = hmac.Key;
-				passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-			}
+            using (var hmac = new HMACSHA512())
+            {
+                result.PasswordSalt = hmac.Key;
+                result.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
 
-			return Tuple.Create(passwordSalt, passwordHash);
-		}
-	}
+            return result;
+        }
+    }
 }

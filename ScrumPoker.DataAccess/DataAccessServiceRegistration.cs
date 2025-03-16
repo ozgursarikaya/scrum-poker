@@ -15,6 +15,7 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IUserDal, UserDal>();
         services.AddScoped<IUserVerificationDal, UserVerificationDal>();
         services.AddScoped<IPlanningPokerUserDal, PlanningPokerUserDal>();
+        services.AddScoped<IUserTokenDal, UserTokenDal>();
 
         return services;
     }

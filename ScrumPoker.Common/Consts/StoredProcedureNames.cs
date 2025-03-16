@@ -18,4 +18,10 @@ public class StoredProcedureNames
     public const string DeletePlanningPokerUser = "DeletePlanningPokerUser";
     public const string UpdatePlanningPokerUser = "UpdatePlanningPokerUser";
     public const string GetPlanningPokers = "GetPlanningPokers";
+
+    public const string GetUserToken = "GetUserToken";
+    public const string CreateUserToken = "CreateUserToken";
+    public static string GetUser = "GetUser";
+    public const string UpdateUserForgetPassword = "UpdateUserForgetPassword";
+    public const string UpdateUserPassword = "UpdateUserPassword";
 }

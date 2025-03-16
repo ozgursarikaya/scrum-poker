@@ -23,4 +23,19 @@ public class UserDal : IUserDal
     {
         return await _dataProvider.Update(StoredProcedureNames.UpdateUser, request);
     }
+
+    public async Task<UserDto> Get(UserGetRequestDto request)
+    {
+        return await _dataProvider.Get<UserDto>(StoredProcedureNames.GetUser, request);
+    }
+
+    public async Task<UpdateForgetPasswordResponseDto> UpdateForgetPassword(string email)
+    {
+        return await _dataProvider.Get<UpdateForgetPasswordResponseDto>(StoredProcedureNames.UpdateUserForgetPassword, new { Email = email });
+    }
+
+    public async Task<bool> UpdatePassword(AuthResetPasswordRequestDto request)
+    {
+        return await _dataProvider.Get<bool>(StoredProcedureNames.UpdateUserPassword, request);
+    }
 }
