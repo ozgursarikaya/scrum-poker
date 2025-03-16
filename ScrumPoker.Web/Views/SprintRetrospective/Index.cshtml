@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="text-md-end mt-3 mt-md-0">
-                            <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
+                            <a href="@Url.RouteUrl("SprintRetrospectiveCreate")" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i> Add New</a>
                         </div>
                     </div>
                 </div>
@@ -40,278 +40,58 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4">
 
-        <!--Project Box-->
-        <div class="card project-box">
-            <div class="card-body">
-                <div class="dropdown float-end">
-                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Add Members</a>
+    @for (int i = 0; i < 5; i++)
+    {
+        <div class="col-lg-4">
+            <!--Project Box-->
+            <div class="card project-box">
+                <div class="card-body">
+                    <div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#">Edit</a>
+                            <a class="dropdown-item" href="#">Delete</a>
+                            <a class="dropdown-item" href="#">Add Members</a>
+                        </div>
                     </div>
+
+                    <!-- Title-->
+                    <h4 class="mt-0"><a href="project-detail.html" class="text-dark">Retrospective Meeting Name</a></h4>
+                    <p class="text-muted text-uppercase"><i class="mdi mdi-account-circle"></i> <small>Team Name</small></p>
+                    <div class="badge bg-soft-warning text-warning mb-3">Ongoing</div>
+                    <!-- Desc-->
+                    <p class="text-muted font-13 mb-3 sp-line-2">
+                        With supporting text below as a natural lead-in to additional contenposuere erat a
+                        ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
+                    </p>
+
+                    <!-- Team-->
+                    <div class="avatar-group mb-3" id="tooltips-container">
+                        <a href="javascript: void(0);" class="avatar-group-item">
+                            <img src="~/images/avatars/avatar-1.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
+                        </a>
+                        <a href="javascript: void(0);" class="avatar-group-item">
+                            <img src="~/images/avatars/avatar-2.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Michael Zenaty" />
+                        </a>
+                        <a href="javascript: void(0);" class="avatar-group-item">
+                            <img src="~/images/avatars/avatar-3.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="James Anderson" />
+                        </a>
+                        <a href="javascript: void(0);" class="avatar-group-item">
+                            <img src="~/images/avatars/avatar-4.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
+                        </a>
+                        <a href="javascript: void(0);" class="avatar-group-item">
+                            <img src="~/images/avatars/avatar-5.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Username" />
+                        </a>
+                    </div>
+
                 </div>
-
-                <!-- Title-->
-                <h4 class="mt-0"><a href="project-detail.html" class="text-dark">Retrospective Meeting Name</a></h4>
-                <p class="text-muted text-uppercase"><i class="mdi mdi-account-circle"></i> <small>Team Name</small></p>
-                <div class="badge bg-soft-warning text-warning mb-3">Ongoing</div>
-                <!-- Desc-->
-                <p class="text-muted font-13 mb-3 sp-line-2">
-                    With supporting text below as a natural lead-in to additional contenposuere erat a
-                    ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
-                </p>
-
-                <!-- Team-->
-                <div class="avatar-group mb-3" id="tooltips-container">
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Michael Zenaty" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-3.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="James Anderson" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Username" />
-                    </a>
-                </div>
-
             </div>
         </div>
+    }
 
-    </div>
-
-
-    <div class="col-lg-4">
-
-        <!--Project Box-->
-        <div class="card project-box">
-            <div class="card-body">
-                <div class="dropdown float-end">
-                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Add Members</a>
-                    </div>
-                </div>
-
-                <!-- Title-->
-                <h4 class="mt-0"><a href="project-detail.html" class="text-dark">Retrospective Meeting Name</a></h4>
-                <p class="text-muted text-uppercase"><i class="mdi mdi-account-circle"></i> <small>Team Name</small></p>
-                <div class="badge bg-soft-success text-success mb-3">Finished</div>
-                <!-- Desc-->
-                <p class="text-muted font-13 mb-3 sp-line-2">
-                    With supporting text below as a natural lead-in to additional contenposuere erat a
-                    ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
-                </p>
-
-                <!-- Team-->
-                <div class="avatar-group mb-3" id="tooltips-container">
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Michael Zenaty" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-3.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="James Anderson" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Username" />
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="col-lg-4">
-
-        <!--Project Box-->
-        <div class="card project-box">
-            <div class="card-body">
-                <div class="dropdown float-end">
-                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Add Members</a>
-                    </div>
-                </div>
-
-                <!-- Title-->
-                <h4 class="mt-0"><a href="project-detail.html" class="text-dark">Retrospective Meeting Name</a></h4>
-                <p class="text-muted text-uppercase"><i class="mdi mdi-account-circle"></i> <small>Team Name</small></p>
-                <div class="badge bg-soft-success text-success mb-3">Finished</div>
-                <!-- Desc-->
-                <p class="text-muted font-13 mb-3 sp-line-2">
-                    With supporting text below as a natural lead-in to additional contenposuere erat a
-                    ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
-                </p>
-
-                <!-- Team-->
-                <div class="avatar-group mb-3" id="tooltips-container">
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Michael Zenaty" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-3.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="James Anderson" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Username" />
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="col-lg-4">
-
-        <!--Project Box-->
-        <div class="card project-box">
-            <div class="card-body">
-                <div class="dropdown float-end">
-                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Add Members</a>
-                    </div>
-                </div>
-
-                <!-- Title-->
-                <h4 class="mt-0"><a href="project-detail.html" class="text-dark">Retrospective Meeting Name</a></h4>
-                <p class="text-muted text-uppercase"><i class="mdi mdi-account-circle"></i> <small>Team Name</small></p>
-                <div class="badge bg-soft-success text-success mb-3">Finished</div>
-                <!-- Desc-->
-                <p class="text-muted font-13 mb-3 sp-line-2">
-                    With supporting text below as a natural lead-in to additional contenposuere erat a
-                    ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
-                </p>
-
-                <!-- Team-->
-                <div class="avatar-group mb-3" id="tooltips-container">
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Michael Zenaty" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-3.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="James Anderson" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Username" />
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="col-lg-4">
-
-        <!--Project Box-->
-        <div class="card project-box">
-            <div class="card-body">
-                <div class="dropdown float-end">
-                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Add Members</a>
-                    </div>
-                </div>
-
-                <!-- Title-->
-                <h4 class="mt-0"><a href="project-detail.html" class="text-dark">Retrospective Meeting Name</a></h4>
-                <p class="text-muted text-uppercase"><i class="mdi mdi-account-circle"></i> <small>Team Name</small></p>
-                <div class="badge bg-soft-success text-success mb-3">Finished</div>
-                <!-- Desc-->
-                <p class="text-muted font-13 mb-3 sp-line-2">
-                    With supporting text below as a natural lead-in to additional contenposuere erat a
-                    ante...<a href="javascript:void(0);" class="fw-bold text-muted">view more</a>
-                </p>
-
-                <!-- Team-->
-                <div class="avatar-group mb-3" id="tooltips-container">
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Michael Zenaty" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-3.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="James Anderson" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mat Helme" />
-                    </a>
-
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                        <img src="~/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="friend" data-bs-container="#tooltips-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Username" />
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
+    
 </div>
 

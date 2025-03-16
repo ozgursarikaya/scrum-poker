@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ScrumPoker.Web.Models;
 
 namespace ScrumPoker.Web.Controllers
 {
@@ -7,7 +8,9 @@ namespace ScrumPoker.Web.Controllers
         [Route("profile", Name = "ProfileDetail")]
         public IActionResult Detail()
         {
-            return View();
+			ProfileDetailViewModel vm = new ProfileDetailViewModel();
+
+			return View(vm);
         }
     }
 }

@@ -56,7 +56,13 @@ namespace ScrumPoker.Web.Controllers
 		[Route("signup", Name = "AuthenticationSignUp")]
 		public async Task<IActionResult> SignUp()
 		{
-			return View();
+			var numberList = RandomHelper.GetRandomNumbers(1, 30, 12);
+			AuthenticationSignUpViewModel vm = new AuthenticationSignUpViewModel();
+			foreach (var number in numberList) 
+			{
+				vm.AvatarList.Add("../images/avatars/avatar-" + number.ToString() + ".jpg");
+			}
+			return View(vm);
 		}
         [Route("forgot-password", Name = "AuthenticationForgotPassword")]
         public async Task<IActionResult> ForgotPassword()
@@ -70,5 +76,7 @@ namespace ScrumPoker.Web.Controllers
 			Response.Cookies.Delete("UserLoginData");
 			return View();
 		}
+
+		
 	}
 }

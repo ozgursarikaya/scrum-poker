@@ -1,9 +1,112 @@
-﻿
+﻿@using ScrumPoker.Web.Models
+@model ProfileDetailViewModel
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detail</h1>
 
-ProfileDetail
+@await Html.PartialAsync("_PageTitlePartialView", new PageTitlePartialViewModel() { Title = "Profile" })
+
+<div class="row">
+    <div class="col-6">
+
+        <div class="card mb-2">
+            <div class="card-body">
+
+
+
+                <ul class="nav nav-tabs nav-bordered" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a href="#profileInformationTab" data-bs-toggle="tab" aria-expanded="true" class="nav-link active" aria-selected="true" role="tab">
+                            Profile Information
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#changePasswordTab" data-bs-toggle="tab" aria-expanded="false" class="nav-link" aria-selected="false" role="tab">
+                            Change Password
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="profileInformationTab" role="tabpanel">
+                        
+                        @using (Html.BeginRouteForm("ProfileSave", FormMethod.Post))
+                        {
+                            <div class="mb-3">
+                                <img src='@Model.User.Avatar' class="avatar-lg img-thumbnail" />
+                                @Html.HiddenFor(m => m.User.Avatar, new { id = "hiddenAvatar" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                @Html.TextBoxFor(m => m.User.Name, new { id = "txtName", @class = "form-control" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                @Html.TextBoxFor(m => m.User.Email, new { id = "txtEmail", @class = "form-control" })
+                            </div>
+
+                            <br />
+
+                            <!--Create -->
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        }
+
+
+                    </div>
+                    <div class="tab-pane" id="changePasswordTab" role="tabpanel">
+                        @using (Html.BeginRouteForm("ProfileChangePassword", FormMethod.Post))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Old Password</label>                                
+                                <div class="input-group input-group-merge">
+                                    @Html.PasswordFor(m => m.ChangePassword.OldPassword, new { id = "txtOldPassword", @class = "form-control", placeholder = "Enter your old password" })
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="password-eye"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <div class="input-group input-group-merge">
+                                    @Html.PasswordFor(m => m.ChangePassword.NewPassword1, new { id = "txtNewPassword1", @class = "form-control", placeholder = "Enter your new password" })
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="password-eye"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password (again)</label>
+                                <div class="input-group input-group-merge">
+                                    @Html.PasswordFor(m => m.ChangePassword.NewPassword2, new { id = "txtNewPassword2", @class = "form-control", placeholder = "Enter your new password again" })
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="password-eye"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <!--Create -->
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/pages/authentication.init.js"></script>

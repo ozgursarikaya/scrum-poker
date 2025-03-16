@@ -1,4 +1,5 @@
-﻿
+﻿@using ScrumPoker.Web.Models
+@model AuthenticationSignUpViewModel
 @{
     Layout = null;
 }
@@ -44,35 +45,39 @@
                     <!-- form -->
                     @using (Html.BeginRouteForm("AuthenticationSignUpPost", FormMethod.Post))
                     {
+
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
-                            <label for="emailaddress" class="form-label">Email address</label>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "emailaddress", placeholder = "Enter your email", type = "email" })
+                            <label class="form-label">Avatar</label><br />
+                            @foreach (var avatar in Model.AvatarList)
+                            {
+                                <img src='@avatar' class="avatar-lg img-thumbnail" style="margin:4px" />
+                            }
                         </div>
                         <div class="mb-3">
-                            <a href="@Url.RouteUrl("AuthenticationForgotPassword")" class="text-muted float-end"><small>Forgot your password?</small></a>
-                            <label for="password" class="form-label">Password</label>
+                            <label class="form-label">Name</label>
+                            @Html.TextBoxFor(m => m.SignUpUser.Name, new { @class = "form-control", id = "txtName", placeholder = "Enter your name", type = "text" })
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email address</label>
+                            @Html.TextBoxFor(m => m.SignUpUser.Email, new { @class = "form-control", id = "txtEmail", placeholder = "Enter your email", type = "email" })
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
                             <div class="input-group input-group-merge">
-                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", id = "password", placeholder = "Enter your password", type = "password" })
+                                @Html.TextBoxFor(m => m.SignUpUser.Password, new { @class = "form-control", id = "txtPassword", placeholder = "Enter your password", type = "password" })
                                 <div class="input-group-text" data-password="false">
                                     <span class="password-eye"></span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mb-3">
-                            <div class="form-check">
-                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-label", @for = "checkbox-signin" })
-                                <label class="form-check-label" for="checkbox-signin">Remember me</label>
-                            </div>
-                        </div>
                         <div class="text-center d-grid">
-                            <button class="btn btn-primary" type="submit">Log In </button>
+                            <button class="btn btn-primary" type="submit">Sign Up</button>
                         </div>
                     }
 
                     <footer class="footer footer-alt">
-                        <p class="text-muted">Don't have an account? <a href="@Url.RouteUrl("AuthenticationSignUp")" class="text-muted ms-1"><b>Sign Up</b></a></p>
+                        <p class="text-muted">Do you have an account? <a href="@Url.RouteUrl("AuthenticationLogin")" class="text-muted ms-1"><b>Login</b></a></p>
                     </footer>
 
                 </div>
