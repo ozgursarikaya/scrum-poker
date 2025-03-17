@@ -1,0 +1,19 @@
+﻿
+<div id="avatar-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="standard-modalLabel">Avatar</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @for (int i = 1; i <= 30; i++)
+                {
+                    string src = "../images/avatars/avatar-" + i.ToString() + ".jpg";
+                    <a href="#" class="btnAvatar"><img src="@src" /></a>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>

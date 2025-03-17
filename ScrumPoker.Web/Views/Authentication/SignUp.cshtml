@@ -17,6 +17,13 @@
     <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
     <link href="~/css/app.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .btnAvatar{cursor:pointer}
+        .btnAvatar:hover{background:red;}
+        .selected-avatar{background:red;}
+    </style>
+
 </head>
 
 <body class="auth-fluid-pages pb-0">
@@ -51,8 +58,9 @@
                             <label class="form-label">Avatar</label><br />
                             @foreach (var avatar in Model.AvatarList)
                             {
-                                <img src='@avatar' class="avatar-lg img-thumbnail" style="margin:4px" />
+                                <img src='@avatar' class="avatar-lg img-thumbnail btnAvatar" style="margin:4px" />
                             }
+                            @Html.HiddenFor(m => m.SignUpUser.Avatar, new { id = "hiddenAvatar" })
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Name</label>
@@ -100,7 +108,24 @@
 
 
     </div>
-    <script src="~/js/pages/authentication.init.js"></script>
+    @* <script src="~/js/pages/authentication.init.js"></script> *@
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+            integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+            crossorigin="anonymous"></script>
+    <script>
+
+        $(document).ready(function()
+        {
+            $(".btnAvatar").click(function()
+            {                
+                $(".btnAvatar").removeClass("selected-avatar");
+                $(this).addClass("selected-avatar");
+                var img = $(this).attr("src");
+                $("#hiddenAvatar").val(img)
+            });
+        });
+
+    </script>
 
 </body>
 </html>

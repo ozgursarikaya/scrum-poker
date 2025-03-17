@@ -34,7 +34,8 @@
                         @using (Html.BeginRouteForm("ProfileSave", FormMethod.Post))
                         {
                             <div class="mb-3">
-                                <img src='@Model.User.Avatar' class="avatar-lg img-thumbnail" />
+                                <img src='@Model.User.Avatar' class="avatar-lg img-thumbnail avatar-image" />
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#avatar-modal">Change Avatar</button>
                                 @Html.HiddenFor(m => m.User.Avatar, new { id = "hiddenAvatar" })
                             </div>
                             <div class="mb-3">
@@ -109,4 +110,20 @@
 </div>
 
 
-<script src="~/js/pages/authentication.init.js"></script>
+@section Scripts{
+    <script src="~/js/pages/authentication.init.js"></script>
+    <script>
+
+        $(document).ready(function()
+        {
+            $(".btnAvatar").click(function()
+            {
+                var img = $(this).find("img").attr("src");
+                alert(img)
+            });
+        });
+
+    </script>
+}
+
+
