@@ -12,6 +12,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\jquery-countdown\.svn\all-wcprops" />
+    <None Include="wwwroot\css\jquery-countdown\.svn\entries" />
+    <None Include="wwwroot\css\jquery-countdown\branches\.svn\all-wcprops" />
+    <None Include="wwwroot\css\jquery-countdown\branches\.svn\entries" />
+    <None Include="wwwroot\css\jquery-countdown\tags\.svn\all-wcprops" />
+    <None Include="wwwroot\css\jquery-countdown\tags\.svn\entries" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\.svn\all-wcprops" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\.svn\entries" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\.svn\prop-base\index.html.svn-base" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\.svn\text-base\index.html.svn-base" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\img\.svn\all-wcprops" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\img\.svn\entries" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\img\.svn\prop-base\digits.png.svn-base" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\img\.svn\text-base\digits.png.svn-base" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\js\.svn\all-wcprops" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\js\.svn\entries" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\js\.svn\prop-base\jquery.countdown.js.svn-base" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\js\.svn\text-base\jquery.countdown.js.svn-base" />
+    <None Include="wwwroot\css\jquery-countdown\trunk\js\.svn\text-base\jquery.countdown.min.js.svn-base" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
@@ -28,6 +50,39 @@
     <ProjectReference Include="..\ScrumPoker.DataAccess\ScrumPoker.DataAccess.csproj" />
     <ProjectReference Include="..\ScrumPoker.DataProvider\ScrumPoker.DataProvider.csproj" />
     <ProjectReference Include="..\ScrumPoker.Localization\ScrumPoker.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\jquery-countdown\.svn\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\.svn\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\.svn\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\.svn\tmp\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\.svn\tmp\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\.svn\tmp\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\branches\.svn\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\branches\.svn\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\branches\.svn\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\branches\.svn\tmp\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\branches\.svn\tmp\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\branches\.svn\tmp\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\tags\.svn\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\tags\.svn\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\tags\.svn\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\tags\.svn\tmp\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\tags\.svn\tmp\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\tags\.svn\tmp\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\.svn\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\.svn\tmp\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\.svn\tmp\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\.svn\tmp\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\img\.svn\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\img\.svn\tmp\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\img\.svn\tmp\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\img\.svn\tmp\text-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\js\.svn\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\js\.svn\tmp\prop-base\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\js\.svn\tmp\props\" />
+    <Folder Include="wwwroot\css\jquery-countdown\trunk\js\.svn\tmp\text-base\" />
   </ItemGroup>
 
 </Project>

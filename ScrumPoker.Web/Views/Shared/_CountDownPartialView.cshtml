@@ -1,0 +1,19 @@
+﻿
+
+<div id="countdown"></div>
+
+@section Script {
+    <script src="../libs/jquery-countdown/jquery.countdown.min.js"></script>
+    <script>
+
+        $("#countdown").countdown("2025/03/19 00:00:05", function(event) {
+            $(this).text(
+                event.strftime('%M:%S')
+            );
+        });
+
+    </script>
+}
+
+
+@* @await Html.PartialAsync("_CountDownPartialView") *@

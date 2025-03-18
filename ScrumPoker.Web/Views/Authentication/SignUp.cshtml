@@ -45,6 +45,8 @@
                         </div>
                     </div>
 
+                    @await Html.PartialAsync("_CountDownPartialView")
+
                     <!-- title-->
                     <h4 class="mt-0">Sign Up</h4>
                     <p class="text-muted mb-4">Please fill all inputs.</p>
@@ -123,6 +125,17 @@
                 var img = $(this).attr("src");
                 $("#hiddenAvatar").val(img)
             });
+        });
+
+    </script>
+
+    <script src="../libs/jquery-countdown/jquery.countdown.min.js"></script>
+    <script>
+
+        $("#countdown").countdown("2025/03/19 00:00:05", function(event) {
+            $(this).text(
+                event.strftime('%M:%S')
+            );
         });
 
     </script>
