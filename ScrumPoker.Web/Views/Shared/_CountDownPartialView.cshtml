@@ -1,19 +1,36 @@
 ﻿
 
+
+<a href="#" class="btn btn-md btn-success btnSetCountDown" data-bs-toggle="modal" data-bs-target="#count-down-modal">Set Count Down</a>
+
+
+
+<!-- Standard modal content -->
+<div id="count-down-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="count-down-modal-modalLabel">Count Down Timer</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Set Minute For Count Down</label>
+                    <input data-toggle="touchspin" data-bts-max="15" data-bts-min="1" value="1" data-btn-vertical="true" type="text" id="txtCountDownMinute">
+                    <br />
+                    <button type="button" class="btn btn-success btnSaveCountDown" data-bs-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div id="countdown"></div>
 
-@section Script {
-    <script src="../libs/jquery-countdown/jquery.countdown.min.js"></script>
-    <script>
 
-        $("#countdown").countdown("2025/03/19 00:00:05", function(event) {
-            $(this).text(
-                event.strftime('%M:%S')
-            );
-        });
-
-    </script>
-}
 
 
 @* @await Html.PartialAsync("_CountDownPartialView") *@

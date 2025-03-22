@@ -32,3 +32,63 @@
     </div>
 </div>
 
+@await Html.PartialAsync("_CountDownPartialView") 
+
+
+@section Scripts {
+    <script src="../libs/jquery-countdown/jquery.countdown.min.js"></script>
+
+    <script src="../libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script>
+
+        $(document).ready(function()
+        {
+
+            $("input[data-toggle='touchspin']").TouchSpin();
+            $(".btnSaveCountDown").click(function()
+            {
+                var minute = $("#txtCountDownMinute").val();
+                CountDown(addMinutesToCurrentDate(minute))
+            })
+        })
+
+        function addMinutesToCurrentDate(minute) {
+
+            var now = new Date();
+            console.log("Öncesi : " + now);
+            now.setMinutes(parseInt(now.getMinutes()) + parseInt(minute));
+            
+            console.log("sonrası : " + now);
+
+            var year    = now.getFullYear();
+            var month   = ("0" + (now.getMonth() + 1)).slice(-2); // Aylar 0-index olduğu için +1 ekliyoruz
+            var day     = ("0" + now.getDate()).slice(-2);
+            var hours   = ("0" + now.getHours()).slice(-2);
+            var minutes = ("0" + now.getMinutes()).slice(-2);
+            var seconds = ("0" + now.getSeconds()).slice(-2);
+
+            console.log(year);
+            console.log(month);
+            console.log(day);
+            console.log(hours);
+            console.log(minutes);
+            console.log(seconds);
+
+            var formattedDate =  year + "/" + month + "/" + day + " " + hours + ":" + minutes + ":" + seconds;
+            
+            return formattedDate;
+        }
+
+        function CountDown(startDate)
+        {
+            $("#countdown").countdown(startDate, function(event) {
+                $(this).text(
+                    event.strftime('%M:%S')
+                );
+            });
+        }
+
+        
+
+    </script>
+}
