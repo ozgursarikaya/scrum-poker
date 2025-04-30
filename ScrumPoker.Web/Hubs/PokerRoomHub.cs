@@ -48,7 +48,7 @@ namespace ScrumPoker.Web.Hubs
             model.UserList = UserList.Where(w => w.RoomId == roomId).ToList();
             model.NextRound = resetAllVotes;
 
-            if(isAdminOpenedCards)
+            if (isAdminOpenedCards && taskId != null)
             {
                 var task = StaticData.TaskList.FirstOrDefault(w => w.Id == taskId);
                 task.IsVoted = true;
@@ -80,12 +80,5 @@ namespace ScrumPoker.Web.Hubs
             }
             await GetUserListInRoom(model.RoomId, false, false);
         }
-    }
-
-    class GetUserListInRoomResponseModel
-    {
-        public bool IsAdminOpenedCards { get; set; }
-        public List<PokerUserModel> UserList { get; set; } = new();
-        public bool NextRound { get; set; }
     }
 }
